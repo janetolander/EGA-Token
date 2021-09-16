@@ -56,6 +56,7 @@ export default function TokenBuy(props) {
   const [open, setOpen] = React.useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [showPaypal, setShowPaypal] = useState(false);
+  const [sendingComplete, setSendingComplete] = useState(false)
 
   const handleOpen = () => {
     setOpen(true);
@@ -92,33 +93,37 @@ export default function TokenBuy(props) {
   };
 
     const sendToken = async (tokenAmount) => {
-        console.log('I am sendToken method. Nice to meet you.')
-        var privKey = PRIVATE_KEY;
-        
-        var toAddress_bump = props.currentAccount;
-        var toAddress = toAddress_bump[0].toLowerCase();
-        var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
-        var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS);
-        var amount = web3.utils.toHex(Number(tokenAmount) * 1e16);
-        try {
-            let encoded = contract.methods.transfer(toAddress, amount).encodeABI();
-            var tx = {
-                contractAddress:TOKEN_ADDRESS,
-                gasLimit: web3.utils.toHex(53000),
-                to: TOKEN_ADDRESS,
-                data: encoded
-            }
-            let signed = await web3.eth.accounts.signTransaction(tx, privKey);
+        if(!sendingComplete){
+            console.log('I am sendToken method. Nice to meet you.')
+            var privKey = PRIVATE_KEY;
             
-            web3.eth
-                .sendSignedTransaction(signed.rawTransaction).once("receipt", function (receipt) {
-                    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', privKey)
-                })
+            var toAddress_bump = props.currentAccount;
+            var toAddress = toAddress_bump[0].toLowerCase();
+            var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
+            var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS);
+            var amount = web3.utils.toHex(Number(tokenAmount) * 1e16);
+            try {
+                let encoded = contract.methods.transfer(toAddress, amount).encodeABI();
+                var tx = {
+                    contractAddress:TOKEN_ADDRESS,
+                    gasLimit: web3.utils.toHex(53000),
+                    to: TOKEN_ADDRESS,
+                    data: encoded
+                }
+                let signed = await web3.eth.accounts.signTransaction(tx, privKey);
+                
+                web3.eth
+                    .sendSignedTransaction(signed.rawTransaction).once("receipt", function (receipt) {
+                        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', privKey)
+                        setSendingComplete(true)
+                    })
+            
 
-        } catch (error) {
-            console.error(error);
-            throw error;
-        };
+            } catch (error) {
+                console.error(error);
+                throw error;
+            };
+        }
     }
 
   const handleSubmit =(e) =>{
@@ -204,6 +209,8 @@ export default function TokenBuy(props) {
                         sendToken={sendToken}
                         amount={egaAmount} 
                         price={price}
+                        sendingComplete = {sendingComplete}
+                        setSendingComplete = {setSendingComplete}
                     />: null  
                 }
                    

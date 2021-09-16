@@ -11,7 +11,8 @@ import scriptLoader from "react-async-script-loader";
      "ARBEG9wQuQF0ZsKC9OLBokioEkokiNNv7mjAmv4uqYnI9Bo_5adWcVBdC9m-o0mENSYsuk-45OnPQWTH"
  };
 
- const CLIENT_ID = CLIENT.sandbox;
+ const CLIENT_ID = CLIENT.production;
+//  const CLIENT_ID = CLIENT.sandbox;
 
 
 
@@ -23,7 +24,8 @@ class PaypalButton extends React.Component {
     this.state = {
       showButtons: false,
       loading: true,
-      paid: false
+      paid: false,
+      sendingComplete:this.props.sendingComplete
     };
 
     window.React = React;
@@ -84,7 +86,10 @@ class PaypalButton extends React.Component {
     const { showButtons, loading, paid } = this.state;
     if (paid) {
       console.log('your payment is successful, congratelation!!!')
-      this.props.sendToken(this.props.amount);
+      if(!this.state.sendingComplete){
+        this.props.sendToken(this.props.amount);
+      }
+      
     }
     return (
       <div style={{width:'60%', backgroundColor:'grey', color:'white', borderRadius:5, minHeight:450}}>
