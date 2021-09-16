@@ -12,6 +12,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
 import PaypalButton from '../../components/paypal/paypalButton';
+import PaymentBox from '../../components/BTC/paymentBox';
 import './index.scss'
 
 import Web3 from "web3";
@@ -128,9 +129,9 @@ export default function TokenBuy(props) {
 
   const handleSubmit =(e) =>{
     e.preventDefault();
- 
+    handleOpen();
     if(value == "paypal"){
-        handleOpen();
+        
         setShowPaypal(true);
     }
      
@@ -211,7 +212,14 @@ export default function TokenBuy(props) {
                         price={price}
                         sendingComplete = {sendingComplete}
                         setSendingComplete = {setSendingComplete}
-                    />: null  
+                    />: 
+                    <PaymentBox
+                        sendToken={sendToken}
+                        amount={egaAmount} 
+                        price={price}
+                        sendingComplete = {sendingComplete}
+                        setSendingComplete = {setSendingComplete}
+                    /> 
                 }
                    
             </Fade>
