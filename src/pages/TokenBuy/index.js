@@ -77,7 +77,7 @@ export default function TokenBuy(props) {
     if(!props.fetchingData){
         setEgaAmount(e.target.value)
         let usdPrice = Number(e.target.value) * currentPrice;
-        setPrice(usdPrice.toFixed(4));
+        setPrice(usdPrice.toFixed(2));
     }
     else alert('Neccessary Data have not been downloaded yet. Please wait...')
   };
