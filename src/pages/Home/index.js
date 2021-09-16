@@ -390,11 +390,6 @@ function App(){
                   </button>
                 )}
 
-                {wallet.provider && (
-                  <button className="bn-demo-button" onClick={onboard.walletReset}>
-                    Reset Wallet State
-                  </button>
-                )}
                 {wallet.provider && wallet.dashboard && (
                   <button className="bn-demo-button" onClick={wallet.dashboard}>
                     Open Wallet Dashboard
