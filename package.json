@@ -1,0 +1,75 @@
+{
+  "name": "tradingview",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.3.15",
+    "@binance-chain/bsc-connector": "^1.0.0",
+    "@material-ui/core": "^4.11.4",
+    "@pancakeswap-libs/sdk": "^1.0.1",
+    "@pancakeswap-libs/uikit": "^0.29.4",
+    "@reduxjs/toolkit": "^1.6.1",
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.17.1",
+    
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.2.4",
+    "@web3-react/walletlink-connector": "^6.2.5",
+    "axios": "^0.21.4",
+    "bignumber.js": "^9.0.1",
+    "bnc-notify": "^1.9.1",
+    "bnc-notify-staging": "https://github.com/blocknative/notify#develop",
+    "bnc-onboard": "^1.34.2",
+    "bnc-onboard-staging": "https://github.com/blocknative/onboard#develop",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.6.0",
+    "cors": "^2.8.5",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.25.1",
+    "ethereumjs-tx": "^2.1.2",
+    "ethers": "^5.4.6",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "node-sass": "^4.14.1",
+    "react": "^17.0.1",
+    "react-async-script-loader": "^0.3.0",
+    "react-dom": "^17.0.1",
+    "react-icon": "^1.0.0",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.1",
+    "react-table": "^6.6.0",
+    "stripe": "^8.174.0",
+    "styled-components": "^5.3.1",
+   
+    "web-vitals": "^0.2.4",
+    "web3": "^1.5.2",
+    "web3modal": "^1.9.4"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "serve": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "heroku": "yarn build && git push heroku master"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.15.4",
+    "babel-eslint": "^10.1.0"
+  }
+}
