@@ -66,7 +66,7 @@ export default function PaymentBox(props) {
     
     const handleSubmit = () => {
         // sendToken(props.amount)
-        props.sendToken(10)
+        props.sendToken(props.amount)
     }
     
     return (
