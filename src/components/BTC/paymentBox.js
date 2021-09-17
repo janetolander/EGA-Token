@@ -80,6 +80,7 @@ export default function PaymentBox(props) {
                 <form
                     method="POST"
                     action="https://btcpayjungle.com/apps/2PT5KLwGodnxDEYgUuZNgpwf6QU9/pos"
+                    target="blank"
                 >
                     <div style={{padding:20, display:'inline'}}>
                         <span style={{color:'white', fontSize:'18px', fontWeight:700, justifyContent:'center'}}>Email : </span>
