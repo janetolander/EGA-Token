@@ -78,6 +78,7 @@ export default function TokenBuy(props) {
   const handleAmountChange = (e) => {
     if(!props.fetchingData){
         setEgaAmount(e.target.value)
+        sessionStorage.setItem('tokenAmount', e.target.value)
         let usdPrice = Number(e.target.value) * currentPrice;
         setPrice(usdPrice.toFixed(2));
     }
@@ -144,7 +145,7 @@ export default function TokenBuy(props) {
         <form style={{width:'60%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
             <div className='card'>
                 <div className='card-header'>
-                    EGA Token Buying
+                    EGA Token Buying 
                 </div>
                 <div className='card-body'>
                     <div className='textfield'>

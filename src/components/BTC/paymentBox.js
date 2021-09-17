@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -39,30 +38,36 @@ const GreenCheckbox = withStyles({
     },
     checked: {},
   })((props) => <Checkbox color="default" {...props} />);
+
 export default function PaymentBox(props) {
-const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-    });
-  const [email, setEmail] = useState('lyappunov19@outlook.com')
-  const [confirm, setConfirm] = useState()
+    const [state, setState] = useState({
+        checkedA: true,
+        checkedB: true,
+        checkedF: true,
+        checkedG: true,
+        });
+    const [email, setEmail] = useState('lyappunov19@outlook.com')
+    const [confirm, setConfirm] = useState()
 
-  const classes = useStyles();
-  
-  const handleInput = (e) => {
+    const classes = useStyles();
     
-    setEmail(e.target.value)
-  };
+    const handleInput = (e) => {
+        
+        setEmail(e.target.value)
+    };
 
-  const handleCheckbox = (e) => {
-    setConfirm(e.target.checked)
-  };
+    const handleCheckbox = (e) => {
+        setConfirm(e.target.checked)
+    };
 
-  const handleCheckChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+    const handleCheckChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
+    };
+    
+    const handleSubmit = () => {
+        // sendToken(props.amount)
+        props.sendToken(10)
+    }
     
     return (
         <div style={{width:'60%', backgroundColor:'grey', color:'white', borderRadius:5, minHeight:350}}>
@@ -70,10 +75,11 @@ const [state, setState] = useState({
                 <div>
                     <h2>EGA token amounts : {props.amount} EGA</h2>
                     <h2>Price :  {props.price} USD</h2>
+                    <h2>Price :  {props.currentAccount} USD</h2>
                 </div>
                 <form
                     method="POST"
-                    action="https://btcpayjungle.com/apps/3GAWsoxm6qh7mJKoD94k7y5PhHji/pos"
+                    action="https://btcpayjungle.com/apps/2PT5KLwGodnxDEYgUuZNgpwf6QU9/pos"
                 >
                     <div style={{padding:20, display:'inline'}}>
                         <span style={{color:'white', fontSize:'18px', fontWeight:700, justifyContent:'center'}}>Email : </span>
@@ -102,14 +108,16 @@ const [state, setState] = useState({
                     <input
                         type="hidden"
                         name="redirectUrl"
-                        value="https://example.com/thankyou"
+                        value="https://ega-coin2.vercel.app/"
                     />
                     <div>
                         <Button
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            type='submit'
+                            type="submit"
+                            onClick={handleSubmit}
+                            
                         >
                             {`To Payment ($${props.price})`}
                         </Button>

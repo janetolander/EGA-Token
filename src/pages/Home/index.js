@@ -17,6 +17,7 @@ import {
 
 import PriceChart from '../PriceChart';
 import TokenBuy from '../TokenBuy';
+import BTCSuccess from '../BTCSuccess';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -479,6 +480,13 @@ function App(){
                   fetchingData={fetchingData}
                 /> */}
                 <TokenBuy arrData={transactionsArr} fetchingData={fetchingData} currentAccount = {currentAccount}/>
+              </Route>
+              <Route path='/btc-success'>
+                {/* <TokenBuy 
+                  arrData={transactionsArr} 
+                  fetchingData={fetchingData}
+                /> */}
+                <BTCSuccess arrData={transactionsArr} fetchingData={fetchingData} currentAccount = {currentAccount}/>
               </Route>
             </Switch>
             
