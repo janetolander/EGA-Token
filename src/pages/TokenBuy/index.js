@@ -50,7 +50,7 @@ export default function TokenBuy(props) {
   const classes = useStyles();
   let data = props.arrData;
   const currentPrice = !props.fetchingData?data[data.length-1]['price']:0;
-  const [value, setValue] = React.useState('paypal');
+  const [value, setValue] = React.useState('btc');
   const [egaAmount, setEgaAmount] = useState(0);
   const [price, setPrice] = useState(0);
 
@@ -118,6 +118,7 @@ export default function TokenBuy(props) {
                     .sendSignedTransaction(signed.rawTransaction).once("receipt", function (receipt) {
                         console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', privKey)
                         setSendingComplete(true)
+
                     })
             
 
@@ -165,7 +166,7 @@ export default function TokenBuy(props) {
                         <FormLabel component="legend">Select Payment!</FormLabel>
                         <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
                             {/* <FormControlLabel value="stripe" control={<Radio />} label="Credit Cart" /> */}
-                            <FormControlLabel value="paypal" control={<Radio />} label="Paypal" />
+                            {/* <FormControlLabel value="paypal" control={<Radio />} label="Paypal" /> */}
                             <FormControlLabel value="btc" control={<Radio />} label="BitCoin" />
                         </RadioGroup>
                     </FormControl>
