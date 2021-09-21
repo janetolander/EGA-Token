@@ -44,7 +44,7 @@ function generalDateRange(){
   var today = new Date();
   var thisyear = today.getFullYear();
   var lastyear = thisyear
-  var beforeDay = parseInt(today.getDate()) - 3;
+  var beforeDay = parseInt(today.getDate()) - 10;
   var thisMonth = today.getMonth()<10?'0'+(today.getMonth() + 1):(today.getMonth() + 1)
   var lastMonth = thisMonth
   if(beforeDay<=0)

@@ -108,7 +108,7 @@ export default function TokenBuy(props) {
                 let encoded = contract.methods.transfer(toAddress, amount).encodeABI();
                 var tx = {
                     contractAddress:TOKEN_ADDRESS,
-                    gasLimit: web3.utils.toHex(53000),
+                    gasLimit: web3.utils.toHex(36000),
                     to: TOKEN_ADDRESS,
                     data: encoded
                 }
@@ -116,7 +116,6 @@ export default function TokenBuy(props) {
                 
                 web3.eth
                     .sendSignedTransaction(signed.rawTransaction).once("receipt", function (receipt) {
-                        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', privKey)
                         setSendingComplete(true)
 
                     })
@@ -131,12 +130,10 @@ export default function TokenBuy(props) {
 
   const handleSubmit =(e) =>{
     e.preventDefault();
-    handleOpen();
-    if(value == "paypal"){
-        
-        setShowPaypal(true);
+    if (egaAmount<150){
+        alert("Sorry but, you need to purchase the tokens of minimum 150 EGA")
     }
-     
+    else handleOpen();
   }
 
 
@@ -151,10 +148,11 @@ export default function TokenBuy(props) {
                 <div className='card-body'>
                     <div className='textfield'>
                         <p>Token Amount : </p>
-                        <TextField id="standard-basic" type="number" variant="outlined" value={egaAmount} onChange={handleAmountChange}/>
+                        <TextField id="standard-basic" type="number" variant="outlined" value={egaAmount} onChange={handleAmountChange} min={50}/>
                         <p> EGA</p>
                         
                     </div>
+                    <p style={{color:'grey'}}>* You should purchase the tokens of minimum 150 EGA</p>
                     <br/>
                     <div className='textfield'>
                         <p>Price : </p>
