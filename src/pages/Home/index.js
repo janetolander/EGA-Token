@@ -21,6 +21,7 @@ import BTCSuccess from '../BTCSuccess';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import Telegram from 'telegram-notify';
 
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
@@ -151,7 +152,11 @@ function App(){
   const [onboard, setOnboard] = useState(null)
   const [notify, setNotify] = useState(null)
   const [walletBalance, setWalletBalance] = useState(null)
+  const [sentMessage, setSentMessage] = useState(false)
+  const [currentPrice, setCurrentPrice] = useState(0)
            
+  const BOT_TOKEN = "2047059161:AAHHjFvEhVnBd_nJBBMJNuLdGwvxv1SBRcM";
+  const CHAT_ID = "155390373"
   
   const setComplete = () => {
     setComponentFlg(true)
@@ -262,27 +267,51 @@ function App(){
         }
       })
    
+      if(sessionStorage.getItem('bnbBalance')){
+        bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
+          let transaction_obj_arr = [];
+          let wb_usdt_arr = usds.data.ethereum.dexTrades;
+          wb_usdt_arr.map((arr, index) => {
+            // const e_time = arr.timeInterval.minute.substring(0,13);
+            // var idx = wb_usdt_arr.findIndex(item => item.block.timestamp.time == e_time);
+            // const ega_price = Number(arr.quotePrice) * Number(wb_usdt_arr[idx].quotePrice);
+            
+            const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice) /100)
+  
+            transaction_obj_arr.push({
+              d: arr.timeInterval.minute,
+              p: ega_price,
+              x: index,
+              y: ega_price,
+            });
+          })
+  
+          setTransactions(transaction_obj_arr);
+          var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(5)
+          setCurrentPrice(price)
+          setFetchingUSDData(false);
+          
+        });
+      }
+      
+  }
 
-      bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
-        let transaction_obj_arr = [];
-        let wb_usdt_arr = usds.data.ethereum.dexTrades;
-        wb_usdt_arr.map((arr, index) => {
-          // const e_time = arr.timeInterval.minute.substring(0,13);
-          // var idx = wb_usdt_arr.findIndex(item => item.block.timestamp.time == e_time);
-          // const ega_price = Number(arr.quotePrice) * Number(wb_usdt_arr[idx].quotePrice);
-          const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice) /100)
-          transaction_obj_arr.push({
-            d: arr.timeInterval.minute,
-            p: ega_price,
-            x: index,
-            y: ega_price,
-          });
-        })
 
-        setTransactions(transaction_obj_arr);
-        setFetchingUSDData(false);
-      });
-
+  const sendNotify = async () =>{
+    if(sessionStorage.getItem('bnbBalance')){
+      let notify = new Telegram({token:BOT_TOKEN, chatId:CHAT_ID})
+      
+      var message = 'The current price of EGA token is ' + currentPrice + ' USD'
+      // await notify.send('The current price of EGA token is ' + transactions[transactions.length - 1].p);
+      console.log('here is the notify object is :::::::::::::::::::::', message)
+      const fetchOption = {}
+      const apiOption = {
+        disable_web_page_preview:false,
+        disable_notification:false
+      }
+      await notify.send(message,fetchOption, apiOption);
+      setSentMessage(true);
+    }
   }
 
   async function buyNft(){
@@ -334,6 +363,10 @@ function App(){
 
     setNotify(initNotify())
   }, [])
+
+  useEffect(()=>{
+    sendNotify()
+  },[currentPrice])
 
   useEffect(() => {
     const previouslySelectedWallet = window.localStorage.getItem(
@@ -460,7 +493,9 @@ function App(){
               </div>
               <div className="col-md-8">
                 {/* <p style={{fontSize:28,fontWeight:700,color:'#1eff1e'}}>{!fetchingUSDData?(sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(BNBPrice) /100) + ' USD':''} </p> */}
-                <p style={{fontSize:28,fontWeight:700,color:'#1eff1e'}}>{!fetchingUSDData?transactions[transactions.length - 1].p + 'USD':''} </p>
+                
+                {/* <p style={{fontSize:28,fontWeight:700,color:'#1eff1e'}}>{!fetchingUSDData?transactions[transactions.length - 1].p + 'USD':''} </p> */}
+                <p style={{fontSize:28,fontWeight:700,color:'#1eff1e'}}>{!fetchingUSDData?currentPrice + 'USD':''} </p>
                 {/* <p style={{fontSize:28,fontWeight:700,color:'#1eff1e'}}>{!fetchingUSDData?transactions[transactions.length - 1].y*BNBPrice + 'USD':''} </p> */}
               </div>
               
