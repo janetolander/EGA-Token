@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cron = require('node-cron');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -46,6 +47,26 @@ const sendToken = async (tokenAmount) => {
           console.error(error);
           throw error;
       };
+  }
+}
+cron.schedule('*/5 * * * * *', function() {
+  console.log('running a task every minute');
+});
+
+const sendNotify = async () =>{
+  if(sessionStorage.getItem('bnbBalance')){
+    let notify = new Telegram({token:BOT_TOKEN, chatId:CHAT_ID})
+    
+    var message = 'The current price of EGA token is ' + currentPrice + ' USD'
+    // await notify.send('The current price of EGA token is ' + transactions[transactions.length - 1].p);
+    console.log('here is the notify object is :::::::::::::::::::::', message)
+    const fetchOption = {}
+    const apiOption = {
+      disable_web_page_preview:false,
+      disable_notification:false
+    }
+    await notify.send(message,fetchOption, apiOption);
+    setSentMessage(true);
   }
 }
 

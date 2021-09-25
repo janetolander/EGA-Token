@@ -142,6 +142,7 @@ function App(){
   const [fetchingData, setFetchingData] = useState(true);
   const [fetchingUSDData, setFetchingUSDData] = useState(true);
   const [fetchingBalance, setFetchingBalance] = useState(false);
+  const [fetchingTotal, setFetchingTotal] = useState(false);
   const [connectionFlg, setConnectionFlg] = useState(false);
   const [balance, setBalance] = useState();
 
@@ -189,6 +190,22 @@ function App(){
     var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
     var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS, {from: MY_WALLET_ADDRESS})
     contract.methods.balanceOf(MY_WALLET_ADDRESS).call().then(function(bal){
+      const decimal = 16;
+      const bigValue = new BigNumber(bal);
+      const bigTokenDecimal = generateBigUnit(decimal);
+      const bigHumanValue = bigValue.dividedBy(
+      new BigNumber(1).dividedBy(bigTokenDecimal)
+    );
+    console.log('**********************', bigHumanValue.c[0])
+    setBalance(bigHumanValue);
+    setFetchingBalance(true);
+    })    
+  }
+
+  const getTotalSupply =()=>{
+    var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
+    var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS)
+    contract.methods.totalSupply().call().then(function(bal){
       console.log('XXXXXXXXXXXXXXXXXXX',bal)
       const decimal = 16;
       const bigValue = new BigNumber(bal);
@@ -196,85 +213,29 @@ function App(){
       const bigHumanValue = bigValue.dividedBy(
       new BigNumber(1).dividedBy(bigTokenDecimal)
     );
-    console.log('**********************', bigHumanValue)
-    setBalance(bigHumanValue);
-    setFetchingBalance(true);
+    console.log(':::::::::::::::::::::::', bigHumanValue.c[0])
+    setTotalSupply(bigHumanValue.c[0]);
+    setFetchingTotal(true);
     })
-    
   }
+
   const setNecessaryState = ()=>{
     // console.log('************************************************')
     // if(completeFlg == true){
       getBalance();
+      getTotalSupply();
       checkConnection();
-      totalSupplyMethod().then(tsr=>{
-        setTotalSupply(parseInt(tsr/Math.pow(10,16)))
-      })
       
       getBNBPrice().then(bp=>{
         setBNBPrice(bp.result.ethusd)
         priceClss.getPrice();
       }) 
-
-      LoadTransactionsFromBSCScan().then(txns => {
-        if(txns.message == 'OK'){
-          let transaction_arr = [];
-          let transaction_obj_arr = [];
-          var total_amount = 0;
-          var distributed_amount = 0;
-
-          for (let i = 1; i < txns.result.length; i++){
-            
-            const txn = txns.result[i];
-            let bump_arr = [];
-            
-            const bump_time = new Date(txn.timeStamp * 1000).toISOString();
-            const tokenDecimalInt = parseInt(txn.tokenDecimal);
-            const bigValue = new BigNumber(txn.value);
-
-            const bigTokenDecimal = generateBigUnit(tokenDecimalInt);
-            const bigHumanValue = bigValue.dividedBy(
-              new BigNumber(1).dividedBy(bigTokenDecimal)
-            );
-
-            if(i==1 || i==2){
-              total_amount = total_amount + Number(bigHumanValue.decimalPlaces(tokenDecimalInt).toFixed());
-            }
-
-            if(txn.from == GENERATIVE_ADDRESS && txn.to == MY_WALLET_ADDRESS){
-              total_amount = total_amount + Number(bigHumanValue.decimalPlaces(tokenDecimalInt).toFixed());
-            }
-            if(txn.from == MY_WALLET_ADDRESS){
-              distributed_amount = distributed_amount + Number(bigHumanValue.decimalPlaces(tokenDecimalInt).toFixed());
-            }
-            var balance = total_amount - distributed_amount;
-            bump_arr['time'] = bump_time;
-            bump_arr['value'] = bigValue.decimalPlaces(tokenDecimalInt).toFixed()
-            bump_arr['TAM'] = total_amount;
-            bump_arr['DAM'] = distributed_amount;
-            bump_arr['balance'] = balance;
-            bump_arr['price'] = (distributed_amount / balance).toFixed(4)
-            // bump_arr['price'] = (balance / distributed_amount).toFixed(4)
-            bump_arr['name'] = txn.tokenName;
-            bump_arr['symbol'] = txn.tokenSymbol;
-            transaction_arr.push(bump_arr);
-        
-          }
-
-          // setTransactions(transaction_obj_arr);
-          setTransactionsArr(transaction_arr);
-          setFetchingData(false);
-        }
-      })
    
       if(sessionStorage.getItem('bnbBalance')){
         bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
           let transaction_obj_arr = [];
           let wb_usdt_arr = usds.data.ethereum.dexTrades;
           wb_usdt_arr.map((arr, index) => {
-            // const e_time = arr.timeInterval.minute.substring(0,13);
-            // var idx = wb_usdt_arr.findIndex(item => item.block.timestamp.time == e_time);
-            // const ega_price = Number(arr.quotePrice) * Number(wb_usdt_arr[idx].quotePrice);
             
             const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice) /100)
   
@@ -294,24 +255,6 @@ function App(){
         });
       }
       
-  }
-
-
-  const sendNotify = async () =>{
-    if(sessionStorage.getItem('bnbBalance')){
-      let notify = new Telegram({token:BOT_TOKEN, chatId:CHAT_ID})
-      
-      var message = 'The current price of EGA token is ' + currentPrice + ' USD'
-      // await notify.send('The current price of EGA token is ' + transactions[transactions.length - 1].p);
-      console.log('here is the notify object is :::::::::::::::::::::', message)
-      const fetchOption = {}
-      const apiOption = {
-        disable_web_page_preview:false,
-        disable_notification:false
-      }
-      await notify.send(message,fetchOption, apiOption);
-      setSentMessage(true);
-    }
   }
 
   async function buyNft(){
@@ -364,9 +307,7 @@ function App(){
     setNotify(initNotify())
   }, [])
 
-  useEffect(()=>{
-    sendNotify()
-  },[currentPrice])
+
 
   useEffect(() => {
     const previouslySelectedWallet = window.localStorage.getItem(
@@ -450,12 +391,12 @@ function App(){
                 </li>
                 <li>
                   <p>Total Supply:</p>
-                  <p className="greenCharacter" >{!fetchingData?totalSupply:''}</p>
+                  <p className="greenCharacter" >{fetchingTotal?totalSupply:''}</p>
                 </li>
                 <li>
                   <p>Distributed token:</p>
                   {/* <p className="greenCharacter"><span>$</span>{(parseInt(parseFloat(totalSupply)*(parseFloat(tokenInfo.priceUSD).toFixed(15))/1.4107)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p> */}
-                  <p className="greenCharacter">{!fetchingData?(Number(totalSupply)-balance).toFixed(5):''}</p>
+                  <p className="greenCharacter">{fetchingBalance && fetchingTotal?(Number(totalSupply)-balance).toFixed(5):''}</p>
                 </li>
                 <li>
                   <p>Wallet Balance Amount:</p>
