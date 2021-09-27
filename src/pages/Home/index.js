@@ -414,7 +414,7 @@ function App(){
                       {/* <img style={{width:40}} src="https://bscscan.com/images/svg/brands/bnb.svg?v=1.3"/> */}
                       <a style={{color:"white", fontSize:23, fontWeight:700}}>
                         <img style={{width:'10%'}} src="./images/photo_ega_coin.png"/> &nbsp;
-                        {transactionsArr[transactionsArr.length - 1]['symbol']}
+                        EGA
                       </a>
                   </div>
                   :null}
