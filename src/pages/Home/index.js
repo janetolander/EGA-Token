@@ -153,11 +153,7 @@ function App(){
   const [onboard, setOnboard] = useState(null)
   const [notify, setNotify] = useState(null)
   const [walletBalance, setWalletBalance] = useState(null)
-  const [sentMessage, setSentMessage] = useState(false)
   const [currentPrice, setCurrentPrice] = useState(0)
-           
-  const BOT_TOKEN = "2047059161:AAHHjFvEhVnBd_nJBBMJNuLdGwvxv1SBRcM";
-  const CHAT_ID = "155390373"
   
   const setComplete = () => {
     setComponentFlg(true)
@@ -248,7 +244,7 @@ function App(){
           })
   
           setTransactions(transaction_obj_arr);
-          var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(5)
+          var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(9)
           setCurrentPrice(price)
           setFetchingUSDData(false);
           
@@ -413,7 +409,7 @@ function App(){
             <div className="row">
               <div className="col-md-4">
                 <div style={{position:'relative',height:70}}>
-                  {!fetchingData?
+                  {!fetchingUSDData?
                   <div style={{position:'absolute', top:10}}>
                       {/* <img style={{width:40}} src="https://bscscan.com/images/svg/brands/bnb.svg?v=1.3"/> */}
                       <a style={{color:"white", fontSize:23, fontWeight:700}}>
@@ -455,14 +451,14 @@ function App(){
                   arrData={transactionsArr} 
                   fetchingData={fetchingData}
                 /> */}
-                <TokenBuy arrData={transactionsArr} fetchingData={fetchingData} currentAccount = {currentAccount}/>
+                <TokenBuy arrData={transactionsArr} currentPrice={currentPrice} fetchingData={fetchingUSDData} currentAccount = {currentAccount}/>
               </Route>
               <Route path='/btc-success'>
                 {/* <TokenBuy 
                   arrData={transactionsArr} 
                   fetchingData={fetchingData}
                 /> */}
-                <BTCSuccess arrData={transactionsArr} fetchingData={fetchingData} currentAccount = {currentAccount}/>
+                <BTCSuccess arrData={transactionsArr} fetchingData={fetchingUSDData} currentAccount = {currentAccount}/>
               </Route>
             </Switch>
             

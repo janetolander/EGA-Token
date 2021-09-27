@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
 export default function TokenBuy(props) {
   const classes = useStyles();
   let data = props.arrData;
-  const currentPrice = !props.fetchingData?data[data.length-1]['price']:0;
+//   const currentPrice = !props.fetchingData?data[data.length-1]['price']:0;
+  const currentPrice = !props.fetchingData?props.currentPrice:0;
   const [value, setValue] = React.useState('btc');
   const [egaAmount, setEgaAmount] = useState(0);
   const [price, setPrice] = useState(0);
