@@ -17,6 +17,7 @@ import {
 
 import PriceChart from '../PriceChart';
 import TokenBuy from '../TokenBuy';
+import TokenSell from '../TokenSell';
 import BTCSuccess from '../BTCSuccess';
 
 import Button from '@material-ui/core/Button';
@@ -202,14 +203,13 @@ function App(){
     var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
     var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS)
     contract.methods.totalSupply().call().then(function(bal){
-      console.log('XXXXXXXXXXXXXXXXXXX',bal)
+
       const decimal = 16;
       const bigValue = new BigNumber(bal);
       const bigTokenDecimal = generateBigUnit(decimal);
       const bigHumanValue = bigValue.dividedBy(
       new BigNumber(1).dividedBy(bigTokenDecimal)
     );
-    console.log(':::::::::::::::::::::::', bigHumanValue.c[0])
     setTotalSupply(bigHumanValue.c[0]);
     setFetchingTotal(true);
     })
@@ -227,28 +227,35 @@ function App(){
         priceClss.getPrice();
       }) 
    
-      if(sessionStorage.getItem('bnbBalance')){
-        bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
-          let transaction_obj_arr = [];
-          let wb_usdt_arr = usds.data.ethereum.dexTrades;
-          wb_usdt_arr.map((arr, index) => {
-            
-            const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice) /100)
-  
-            transaction_obj_arr.push({
-              d: arr.timeInterval.minute,
-              p: ega_price,
-              x: index,
-              y: ega_price,
-            });
-          })
-  
-          setTransactions(transaction_obj_arr);
-          var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(9)
-          setCurrentPrice(price)
-          setFetchingUSDData(false);
+      if(sessionStorage.getItem('egaBalance')){
+        
+        bqAPI.loadBitqueryDataBTCbalance().then(btc=>{
           
-        });
+          let btcBalance = btc.data.bitcoin.outputs[0].value;
+
+          bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
+            let transaction_obj_arr = [];
+            let wb_usdt_arr = usds.data.ethereum.dexTrades;
+            wb_usdt_arr.map((arr, index) => {
+              // const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice))/100
+              const ega_price = (( (btcBalance*0.735) / sessionStorage.getItem('egaBalance'))*1000000) * Number(arr.quotePrice);
+              transaction_obj_arr.push({
+                d: arr.timeInterval.minute,
+                p: ega_price,
+                x: index,
+                y: ega_price,
+              });
+            })
+    
+            setTransactions(transaction_obj_arr);
+            var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(11)
+            setCurrentPrice(price)
+            setFetchingUSDData(false);
+            
+          });
+
+        })
+        
       }
       
   }
@@ -336,6 +343,9 @@ function App(){
             <li>
               <Link to="/token-buy">Token Buying</Link>
             </li>
+            {/* <li>
+              <Link to="/token-sell">Token Sale</Link>
+            </li> */}
             <li>
                 <div>
                 {!wallet.provider && (
@@ -452,6 +462,13 @@ function App(){
                   fetchingData={fetchingData}
                 /> */}
                 <TokenBuy arrData={transactionsArr} currentPrice={currentPrice} fetchingData={fetchingUSDData} currentAccount = {currentAccount}/>
+              </Route>
+              <Route path='/token-sell'>
+                {/* <TokenBuy 
+                  arrData={transactionsArr} 
+                  fetchingData={fetchingData}
+                /> */}
+                <TokenSell arrData={transactionsArr} currentPrice={currentPrice} fetchingData={fetchingUSDData} currentAccount = {currentAccount}/>
               </Route>
               <Route path='/btc-success'>
                 {/* <TokenBuy 

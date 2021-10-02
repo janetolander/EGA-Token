@@ -84,11 +84,11 @@ export default class Poocoin {
         {
             ethereum(network: bsc) {
               dexTrades(
-                options: {asc: "block.timestamp.time", limit: 200}
+                options: {asc: "block.timestamp.time", limit: 300}
                 exchangeAddress: {in:["0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73"]}
                 quoteCurrency: {in: ["0x55d398326f99059ff775485246999027b3197955"]}
                 time: {since: "${startTime}"}
-                baseCurrency: {in: ["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"]}
+                baseCurrency: {in: ["0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c"]}
               ) {
                 exchange {
                   name
@@ -134,6 +134,33 @@ export default class Poocoin {
         function toISODate(t) {
             return toISODateTime(t).split('T')[0];
         }
+    }
+
+    async loadBitqueryDataBTCbalance() {
+    //    
+        const query = `
+        {
+            bitcoin {
+                inputs(
+                  inputAddress: {is: "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX"}) {
+                  value
+                }
+                outputs( outputAddress: {is: "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX"}) {
+                  value
+                }
+              }
+          }`;
+
+        const res = await fetch('https://graphql.bitquery.io', {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-API-KEY': 'BQYvhnv04csZHaprIBZNwtpRiDIwEIW9',
+            }),
+            body: JSON.stringify({ query }),
+            mode: 'cors',
+        });
+        return await res.json();
     }
 
    generateSymbol(exchange, fromSymbol, toSymbol) {

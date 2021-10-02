@@ -8,9 +8,11 @@ export default class Price{
 
 		this.egaAddress = '0xd93c90070162512b7c74b151fd2c6a58031d1cc9';
 		this.bnbAddress = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
-		// this.lpAddress = '0x98dE283a561f76096B5C4df10C0C7f75A9fCb029'; 
+		this.usdtAddress = '0x55d398326f99059ff775485246999027b3197955';
+		this.btcAddress = '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c';
+		this.lpAddress2 = '0x98dE283a561f76096B5C4df10C0C7f75A9fCb029'; 
 		this.lpAddress = '0x18a9a030d2C052b54146179978B91eDF7414206a'; 
-		// this.lpAddress = '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16'; 
+		this.lpAddress3 = '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16'; 
 		// this.setPriceMethod = pOption.setPriceMethod
     }
 
@@ -19,6 +21,8 @@ export default class Price{
 		const web3 = new Web3(provider);
 		const egaToken = new web3.eth.Contract(ERC20, this.egaAddress);
 		const bnbToken = new web3.eth.Contract(ERC20, this.bnbAddress);
+		const usdtToken = new web3.eth.Contract(ERC20, this.usdtAddress);
+		const btcToken = new web3.eth.Contract(ERC20, this.btcAddress);
 		// orfanoToken.methods.totalSupply().call().then((res)=>{
 		// 	this.setPriceMethod(res)
 		// });
@@ -26,6 +30,8 @@ export default class Price{
 		const lpToken = new web3.eth.Contract(LPToken, this.lpAddress);
 		const egaBalance = await egaToken.methods.balanceOf(this.lpAddress).call();
 		const bnbBalance = await bnbToken.methods.balanceOf(this.lpAddress).call();
+		const usdtBalance = await usdtToken.methods.balanceOf(this.lpAddress).call();
+		const btcBalance = await btcToken.methods.balanceOf(this.lpAddress).call();
 		sessionStorage.setItem('egaBalance', Number(egaBalance));
 		sessionStorage.setItem('bnbBalance', Number(bnbBalance));
 	}	
