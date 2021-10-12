@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
@@ -18,7 +19,7 @@ import './index.scss'
 import Web3 from "web3";
 import {Transaction} from 'ethereumjs-tx';
 import EGA from '../../abi/EGAtoken.json';
-import {TOKEN_ADDRESS, API_KEY, MY_WALLET_ADDRESS, GENERATIVE_ADDRESS, PRIVATE_KEY, BNB_ADDRESS} from '../../global/config'
+import {TOKEN_ADDRESS, BACKEND_URL, PRIVATE_KEY, BNB_ADDRESS} from '../../global/config'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -60,6 +61,46 @@ export default function TokenBuy(props) {
   const [showPaypal, setShowPaypal] = useState(false);
   const [sendingComplete, setSendingComplete] = useState(false)
 
+  const getCurrentDate = () => {
+    var today = new Date();
+    var thisyear = today.getFullYear();
+    var thisMonth = today.getMonth()<10?'0'+(today.getMonth() + 1):(today.getMonth() + 1);
+    var thisDay = today.getDate()<10?'0'+(today.getDate()):today.getDate();
+    var thisMonthToday = thisyear+'-'+thisMonth+'-'+thisDay;
+    var Hours = today.getHours()<10?'0'+today.getHours():today.getHours();
+    var Minutes = today.getMinutes()<10?'0'+today.getMinutes():today.getMinutes();
+    var Seconds = today.getSeconds()<10?'0'+today.getSeconds():today.getSeconds();
+    var time = Hours+ ":" + Minutes + ":" + Seconds;
+    var currentDateTime = thisMonthToday + 'T' + time + 'Z';
+    return currentDateTime ;
+  }
+
+  const savingToDatabase = (amount) => {
+    var datetime =  getCurrentDate();
+    const transactionData = {
+        personName:'',
+        phoneNumber:'',
+        walletAddress: props.currentAccount,
+        tranDate:datetime,
+        tokenName:'Ega Coin',
+        tranType:'BUY',
+        amount : amount
+    }
+    axios
+        .post(`${BACKEND_URL}/record/tranadd`, transactionData)
+        .then(res =>{
+            
+            window.location.href = '/btc-success'
+        }
+            
+        ).catch(err =>{
+            
+            alert('Token has some problems. So, you failed to save your token.')
+        }
+        
+    );
+  }
+  
   const handleOpen = () => {
     setOpen(true);
   };
@@ -96,6 +137,7 @@ export default function TokenBuy(props) {
   };
 
     const sendToken = async (tokenAmount) => {
+        
         if(!sendingComplete){
             console.log('I am sendToken method. Nice to meet you.')
             var privKey = PRIVATE_KEY;
@@ -117,14 +159,14 @@ export default function TokenBuy(props) {
                 
                 web3.eth
                     .sendSignedTransaction(signed.rawTransaction).once("receipt", function (receipt) {
-                        setSendingComplete(true)
-
+                        savingToDatabase(tokenAmount);
+                        setSendingComplete(true);    
                     })
             
 
             } catch (error) {
                 console.error(error);
-                throw error;
+                throw error;                
             };
         }
     }

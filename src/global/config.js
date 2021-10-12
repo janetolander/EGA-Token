@@ -9,3 +9,6 @@ export const MY_WALLET_ADDRESS = "0xd96f037df9e7114cbce55cc75de7367231ae74fb";
 export const GENERATIVE_ADDRESS = "0x20ed7bf7bfcd0ca9d9b31c6ac75b7a0c9f903272";
 // export const PRIVATE_KEY = "bc0df0a1d12f307b459a0374d46fadb86111872646c0af54af048219b21a8177"
 export const PRIVATE_KEY = "15cd0189ae666696cbed027927287b26a2809044031623d0c66cdc0b99823e1c"
+
+//export const BACKEND_URL = 'http://localhost:3600';
+ export const BACKEND_URL = 'https://egaadminserver.herokuapp.com';

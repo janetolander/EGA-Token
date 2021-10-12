@@ -4,7 +4,7 @@ import './index.scss'
 import '../index.css'
 
 import BigNumber from "bignumber.js";
-import {TOKEN_ADDRESS, API_KEY, MY_WALLET_ADDRESS, GENERATIVE_ADDRESS} from '../../global/config'
+import {TOKEN_ADDRESS, API_KEY, MY_WALLET_ADDRESS, BACKEND_URL} from '../../global/config'
 // import { Button, ButtonProps, useWalletModal} from '@pancakeswap-libs/uikit'
 import {
   BrowserRouter as Router,
@@ -101,6 +101,24 @@ export function getBNBPrice(){
   })
 }
 
+export function getCorrectionValue(){
+  return fetch(`${BACKEND_URL}/tokenprice`).then(res => {
+    return res.json()
+  })
+}
+
+export function getPairPriceHistory(){
+  return fetch(`${BACKEND_URL}/currentpairprice/100`).then(res => {
+    return res.json()
+  })
+}
+
+export function getCalculatedPrice(){
+  return fetch(`${BACKEND_URL}/egaprice`).then(res => {
+    return res.json()
+  })
+}
+
 const generateBigUnit = (tokenDecimalInt) => {
   // string
   const unit = new Array(tokenDecimalInt - 1).fill(0).join("");
@@ -184,9 +202,11 @@ function App(){
         });
   };
   const getBalance =()=>{
+    var lpAddress = '0x18a9a030d2C052b54146179978B91eDF7414206a'; ;
     var web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed1.ninicoin.io'))
     var contract = new web3.eth.Contract(EGA, TOKEN_ADDRESS, {from: MY_WALLET_ADDRESS})
     contract.methods.balanceOf(MY_WALLET_ADDRESS).call().then(function(bal){
+      // contract.methods.balanceOf(lpAddress).call().then(function(bal){
       const decimal = 16;
       const bigValue = new BigNumber(bal);
       const bigTokenDecimal = generateBigUnit(decimal);
@@ -229,33 +249,36 @@ function App(){
    
       if(sessionStorage.getItem('egaBalance')){
         
-        bqAPI.loadBitqueryDataBTCbalance().then(btc=>{
-          
-          let btcBalance = btc.data.bitcoin.outputs[0].value;
 
-          bqAPI.loadBitqueryDataUSDT(dateRangeGlobal[0]).then(usds =>{
+
+          getPairPriceHistory().then(pp =>{
             let transaction_obj_arr = [];
-            let wb_usdt_arr = usds.data.ethereum.dexTrades;
-            wb_usdt_arr.map((arr, index) => {
+            
+            let wb_usdt_arr = pp;
+            let j = 0
+            for (let i=wb_usdt_arr.length; i-- ; i>=0) {
               // const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice))/100
-              const ega_price = (( (btcBalance*0.735) / sessionStorage.getItem('egaBalance'))*1000000) * Number(arr.quotePrice);
+              const ega_price = wb_usdt_arr[i].ega_usd;
               transaction_obj_arr.push({
-                d: arr.timeInterval.minute,
+                d: wb_usdt_arr[i].date,
                 p: ega_price,
-                x: index,
+                x: j,
                 y: ega_price,
               });
-            })
+              j++;
+            }
     
             setTransactions(transaction_obj_arr);
-            var price = (transaction_obj_arr[transaction_obj_arr.length - 1].p).toFixed(11)
-            setCurrentPrice(price)
-            setFetchingUSDData(false);
-            
-          });
-
-        })
-        
+            getCalculatedPrice().then(ep=>{
+              console.log('MMMMMMMMMMMMMMMMMMMMMMMMMM', ep)
+              let price  =  ep;
+              getCorrectionValue().then(cv => {
+                var egaprice = (Number(price) + Number(cv[0].ega)).toFixed(12)
+                setCurrentPrice(egaprice)
+                setFetchingUSDData(false);
+              })
+            })
+          });  
       }
       
   }
