@@ -5,7 +5,7 @@ import '../assets/css/common.css';
 
 // We use Route in order to define the different routes of our application
 
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "../private-route/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store/store";
