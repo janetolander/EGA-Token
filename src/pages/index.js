@@ -14,12 +14,12 @@ import jwt_decode from "jwt-decode";
 
 import Signin from "../components/auth/signin";
 import Signup from "../components/auth/signup";
-import TokenBuy from "../pages/tokenBuy";
-import TokenSell from "../pages/tokenSell";
-import TokenSwap from "../pages/tokenSwap";
-import TokenSend from "../pages/tokenSend";
-import Wallet from "../pages/wallet";
-import Profile from "../pages/profile";
+import TokenBuy from "./tokenBuy";
+import TokenSell from "./tokenSell";
+import TokenSwap from "./tokenSwap";
+import TokenSend from "./tokenSend";
+import Wallet from "./wallet";
+import Profile from "./profile";
 import setAuthToken from "../utils/setAuthToken";
 
 import Home from "../pages/home";
