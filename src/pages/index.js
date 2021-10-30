@@ -22,7 +22,7 @@ import Wallet from "./wallet/index";
 import Profile from "./profile/index";
 import setAuthToken from "../utils/setAuthToken";
 
-import Home from "../pages/home";
+import Home from "./home/index";
 
 import { setCurrentUser, logoutUser } from "../actions/authActions";
 import { getTotalInfo } from "../actions/tokenActions";
