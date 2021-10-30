@@ -64,7 +64,7 @@ class PaypalButton extends React.Component {
           description: "EGA token ("+ this.props.amount + "EGA)",
           amount: {
             currency_code: "USD",
-            value: Number(this.props.price)
+            value: (Number(this.props.price)).toFixed(2)
           }
         }
       ]
@@ -92,14 +92,14 @@ class PaypalButton extends React.Component {
       
     }
     return (
-      <div style={{width:'60%', backgroundColor:'grey', color:'white', borderRadius:5, minHeight:450}}>
+      <div style={{width:'60%', backgroundColor:'#0a1c24', color:'white', borderRadius:5, minHeight:450}}>
         {/* {loading && <Spinner />} */}
             <div style={{width:'100%', textAlign:'center', margin:'auto', paddingTop:40, minHeight:450, borderRadius:5, maxHeight:600, overflowY:'scroll'}}>
                 {showButtons && (
                 <div>
                     <div>
-                    <h2>EGA token amounts : {this.props.amount} EGA</h2>
-                    <h2>Price :  {this.props.price} USD</h2>
+                    <h2>E-FRANC token amounts : {this.props.amount} EFRANC</h2>
+                    <h2>Price :  {(Number(this.props.price)).toFixed(2)} USD</h2>
                     </div>
 
                     <PayPalButton

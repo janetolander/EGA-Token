@@ -10,7 +10,7 @@ class ToolTip extends Component {
     let placementStyles = {};
     let width = 200;
     placementStyles.width = width + 'px';
-    placementStyles.left = hoverLoc ;
+    placementStyles.left = hoverLoc + 300 ;
 
     return (
       <div className='hover' style={ placementStyles }>

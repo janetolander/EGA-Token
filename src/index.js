@@ -1,24 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/Home';
-import './assets/scss/global.scss';
+import './index.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {ApolloClient, HttpLink, InMemoryCache, ApolloProvider} from "@apollo/client"
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    header:"Access-Control-Allow-Origin : localhost:3000",
-    uri: "https://graphql.bitquery.io"
-  }),
-  cache: new InMemoryCache()
-})
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App/>
-    </ApolloProvider>,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
