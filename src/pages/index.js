@@ -15,14 +15,14 @@ import jwt_decode from "jwt-decode";
 import Signin from "../components/auth/signin";
 import Signup from "../components/auth/signup";
 import TokenBuy from "./tokenBuy/tokenbuy";
-import TokenSell from "./tokenSell/index";
-import TokenSwap from "./tokenSwap/index";
-import TokenSend from "./tokenSend/index";
-import Wallet from "./wallet/index";
-import Profile from "./profile/index";
+import TokenSell from "./tokenSell/tokensell";
+import TokenSwap from "./tokenSwap/tokenswap";
+import TokenSend from "./tokenSend/tokensend";
+import Wallet from "./wallet/wallet";
+import Profile from "./profile/profile";
 import setAuthToken from "../utils/setAuthToken";
 
-import Home from "./home/index";
+import Home from "./home/home";
 
 import { setCurrentUser, logoutUser } from "../actions/authActions";
 import { getTotalInfo } from "../actions/tokenActions";
