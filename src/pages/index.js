@@ -14,7 +14,7 @@ import jwt_decode from "jwt-decode";
 
 import Signin from "../components/auth/signin";
 import Signup from "../components/auth/signup";
-import TokenBuy from "./tokenBuy/index";
+import TokenBuy from "./tokenBuy/tokenbuy";
 import TokenSell from "./tokenSell/index";
 import TokenSwap from "./tokenSwap/index";
 import TokenSend from "./tokenSend/index";
