@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
 import "../../assets/css/common.css";
-import './index.scss'
+import './layout.scss'
 import headerLogo from "../../assets/images/gahCion.png"
 
 import MenuBar from "./menubar"

@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import Header from "../layout/header";
 import SideBar from "../layout/sidebar";
-import './index.scss'
+import './tokensend.scss'
 
 import {BACKEND_URL} from '../../global/config'
 

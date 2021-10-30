@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import "bootstrap/dist/css/bootstrap.css";
-import './index.scss'
+import './home.scss'
 import '../../index.css'
 import SideBar from "../layout/sidebar";
 import Header from "../layout/header";

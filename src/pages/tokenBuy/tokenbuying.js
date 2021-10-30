@@ -21,7 +21,7 @@ import Header from "../layout/header";
 import SideBar from "../layout/sidebar";
 import PaypalButton from '../../components/paypal/paypalButton';
 import PaymentBox from '../../components/BTC/paymentBox';
-import './index.scss'
+import './tokenbuying.scss'
 
 import {BACKEND_URL} from '../../global/config'
 

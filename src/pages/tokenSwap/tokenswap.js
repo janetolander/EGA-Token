@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Header from "../layout/header";
 import SideBar from "../layout/sidebar";
-import './index.scss';
+import './tokenswap.scss';
 import {BACKEND_URL} from '../../global/config'
 
 const useStyles = makeStyles((theme) => ({

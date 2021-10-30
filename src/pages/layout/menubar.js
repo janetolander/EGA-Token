@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
 import "../../assets/css/common.css";
-import './index.scss'
+import './layout.scss'
 import { logoutUser } from "../../actions/authActions";
 import { getTotalInfo } from "../../actions/tokenActions";
 import { getCurrentPrice } from "../../actions/tokenPriceActions";
