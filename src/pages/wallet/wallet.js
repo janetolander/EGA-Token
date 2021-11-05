@@ -78,6 +78,20 @@ export default function Wallet() {
                 });
     
             }
+
+            if(responseData[3].length != 0){
+                responseData[3].forEach(adminsend => {
+                    let tranDate = (adminsend.sendingDate).replace('T', ' ');
+                    tranDate = tranDate.replace('Z', '');
+                    let rawData_receive = {
+                        tranDate : tranDate,
+                        type : 'ADMIN SEND',
+                        content : adminsend.amount + ' of '+ adminsend.tokenName.toUpperCase() + ' token was sent from admin.'
+                    };
+                    historyData.push(rawData_receive);
+                });
+    
+            }
             
             historyData.sort(function(a, b){
                 return new Date(b.tranDate) - new Date(a.tranDate);
