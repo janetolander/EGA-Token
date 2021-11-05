@@ -10,10 +10,26 @@ export const getCurrentPrice = () => dispatch => {
     axios
         .get(`${SERVER_MAIN_URL}/egaprice`)
         .then(res =>
-            dispatch({
-                type: GET_CURRENT_PRICE,
-                payload: res,
-            })
+            axios
+                .get(`${SERVER_MAIN_URL}/tokenprice`)
+                .then(result => {
+                    let payloadObject = {
+                        prices : res.data,
+                        addingValue : result.data
+                    }
+
+                    dispatch({
+                        type: GET_CURRENT_PRICE,
+                        payload: payloadObject,
+                    })
+                })
+                .catch(error => 
+                    dispatch({
+                        type: GET_ERRORS,
+                        payload: error.response.data
+                    })
+                )
+            
         ).catch(err =>
         dispatch({
             type: GET_ERRORS,

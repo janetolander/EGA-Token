@@ -260,7 +260,7 @@ useEffect(()=>{
                     <div className='card-body'>
                         <div className="row">
                             <div className='col-lg-5'>
-                                <p style={{color:'green'}}>* 1 GAH = {(ega_usd).toFixed(6)} USD </p>
+                                {/* <p style={{color:'green'}}>* 1 GAH = {(ega_usd).toFixed(6)} USD </p> */}
                                 <p style={{color:'green'}}>* 1 EFRANC = {(ega_usd/ega_mos).toFixed(6)} USD </p>
                             </div>
                         

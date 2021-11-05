@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
 import "../../assets/css/common.css";
@@ -17,6 +18,9 @@ import {BACKEND_URL} from '../../global/config'
 class MenuBar extends Component {
     constructor() {
         super();
+        this.state = {
+            gahPrice : 0,
+        }
     }
     onLogoutClick = e => {
         e.preventDefault();
@@ -26,6 +30,8 @@ class MenuBar extends Component {
   render() {
     const { user } = this.props.auth;
     const { tokenprice } = this.props.tokenprice;
+
+    if(tokenprice.prices)console.log('MMMMMMMMMMMMMM', tokenprice.addingValue[0].ega)
     
   return (
     <div>
@@ -49,10 +55,10 @@ class MenuBar extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{background:'#303032'}}>
                         <ul className="navbar-nav ms-auto navbar-list mb-2 mb-lg-0 align-items-center">
                             <li className="nav-item " style={{fontSize:20, color:'#1eff12', fontWeight:700}}>
-                                1 GAH = {tokenprice.data?tokenprice.data.egaPrice:0} USD
+                                1 GAH = {tokenprice.prices?Number(tokenprice.prices.egaPrice) + Number(tokenprice.addingValue[0].ega) : 0} USD
                             </li>
                             <li className="nav-item" style={{fontSize:20, color:'#1eff12', fontWeight:700}}>
-                                1 EFRANC = {tokenprice.data?tokenprice.data.mosPrice:0} EUR
+                                1 EFRANC = {tokenprice.prices?tokenprice.prices.mosPrice:0} EUR
                             </li>
                         </ul>                        
                         <ul className="navbar-nav ms-auto navbar-list mb-2 mb-lg-0 align-items-center">
