@@ -83,7 +83,7 @@ class MenuBar extends Component {
                             
                             <li className="nav-item dropdown">
                                 <a className="nav-link py-0 d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={`${BACKEND_URL}/${user.avatar}`} alt="User-Profile" className="img-fluid avatar avatar-50 avatar-rounded"/>
+                                    <img src={user.avatar?`${BACKEND_URL}/${user.avatar}`:''} alt="User-Profile" className="img-fluid avatar avatar-50 avatar-rounded"/>
                                     <div className="caption ms-3 ">
                                         <h6 className="mb-0 caption-title">{user.name}</h6>
                                         {/* <p className="mb-0 caption-sub-title">Super Admin</p> */}

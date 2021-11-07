@@ -39,7 +39,7 @@ class Profile extends Component {
       });
   }
   editClose() {
-    window.location.href='/list'
+    window.location.href='/tokenbuy'
   }
  
   // These methods will update the state properties.

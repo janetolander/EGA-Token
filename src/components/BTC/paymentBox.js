@@ -76,6 +76,12 @@ export default function PaymentBox(props) {
     const handleSubmit =(e)=>{
         e.preventDefault();
        
+        axios.get(`https://sochain.com/api/v2/get_address_balance/BTC/${senderAddress}`)
+        .then((result)=>{
+            if (Number(result.data.confirmBalance)== 0 && Number(result.data.confirmBalance)==0)
+            alert('Your wallet balance is not enough to buy token.');
+        })
+
         let sendBTCData = {
           recipientAddress: recipientAddress,
           senderAddress:senderAddress,
