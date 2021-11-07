@@ -80,18 +80,19 @@ export default function PaymentBox(props) {
         .then((result)=>{
             if (Number(result.data.confirmBalance)== 0 && Number(result.data.confirmBalance)==0)
             alert('Your wallet balance is not enough to buy token.');
-        })
-
-        let sendBTCData = {
-          recipientAddress: recipientAddress,
-          senderAddress:senderAddress,
-          senderPrivateKey: senderPrivateKey,
-          amountToSend: props.price
-          };
-        axios
-        .post(`${BACKEND_URL}/record/sendbitcoin`, sendBTCData)
-        .then ((res) => {
-          saveSubscribeDatabase()
+            else {
+                let sendBTCData = {
+                    recipientAddress: recipientAddress,
+                    senderAddress:senderAddress,
+                    senderPrivateKey: senderPrivateKey,
+                    amountToSend: props.price
+                    };
+                  axios
+                  .post(`${BACKEND_URL}/record/sendbitcoin`, sendBTCData)
+                  .then ((res) => {
+                    saveSubscribeDatabase()
+                  })
+            }
         })
       }
     const saveSubscribeDatabase = () => {
