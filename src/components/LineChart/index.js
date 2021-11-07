@@ -12,7 +12,6 @@ class LineChart extends Component {
   // GET X & Y || MAX & MIN
   getX(){
     const {data} = this.props;
-    // console.log('here is data KKKKKKKKKKKKKKKKKKKKKKKKK', data)
     return {
       min: data[0].x,
       max: data[data.length - 1].x

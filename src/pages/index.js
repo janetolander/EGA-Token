@@ -27,6 +27,7 @@ import Home from "./home/home";
 import { setCurrentUser, logoutUser } from "../actions/authActions";
 import { getTotalInfo } from "../actions/tokenActions";
 import { getCurrentPrice } from "../actions/tokenPriceActions";
+import { getCurrentAuthorize } from "../actions/authorizeActions";
 
 
 if (localStorage.jwtToken) {
@@ -34,6 +35,7 @@ if (localStorage.jwtToken) {
   setAuthToken(token);
   const decoded = jwt_decode(token);
   store.dispatch(setCurrentUser(decoded));
+  store.dispatch(getCurrentAuthorize(decoded.id))
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
       store.dispatch(logoutUser());

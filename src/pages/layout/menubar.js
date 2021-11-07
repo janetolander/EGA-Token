@@ -30,9 +30,7 @@ class MenuBar extends Component {
   render() {
     const { user } = this.props.auth;
     const { tokenprice } = this.props.tokenprice;
-
-    if(tokenprice.prices)console.log('MMMMMMMMMMMMMM', tokenprice.addingValue[0].ega)
-    
+    const { userauth } = this.props.userauth;
   return (
     <div>
         <div className="position-relative">
@@ -68,9 +66,14 @@ class MenuBar extends Component {
                             <li className="nav-item " style={{padding:0}}>
                                 <NavLink className="dropdown-item" to="/tokenbuy">Token Buying</NavLink>
                             </li>
-                            <li className="nav-item " style={{padding:0}}>
-                                <NavLink className="dropdown-item" to="/tokensell">Token Sale</NavLink>
-                            </li>
+                            {
+                                (user.adminType == 'super' || (userauth.data && userauth.data.tokenSale)) && (
+                                    <li className="nav-item " style={{padding:0}}>
+                                        <NavLink className="dropdown-item" to="/tokensell">Token Sale</NavLink>
+                                    </li>
+                                )
+                            }
+                            
                             <li className="nav-item " style={{padding:0}}>
                                 <NavLink className="dropdown-item" to="/tokenswap">Token Swap</NavLink>
                             </li>
@@ -108,13 +111,15 @@ MenuBar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     token: PropTypes.object.isRequired,
-    tokenprice: PropTypes.object.isRequired
+    tokenprice: PropTypes.object.isRequired,
+    userauth : PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
     token: state.token,
-    tokenprice: state.tokenprice
+    tokenprice: state.tokenprice,
+    userauth:state.userauth
 });
 
 export default connect(

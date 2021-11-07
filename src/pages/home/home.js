@@ -47,13 +47,17 @@ function Home() {
      
       getPairPriceHistory().then(pp =>{
         if(pp){
+          console.log('getPairprice history response is ', pp)
           let transaction_obj_arr = [];
           
           let wb_usdt_arr = pp;
           let j = 0
           for (let i=wb_usdt_arr.length; i-- ; i>=0) {
-            // const ega_price = (sessionStorage.getItem('bnbBalance') / sessionStorage.getItem('egaBalance')) * (Number(arr.quotePrice))/100
-            const ega_price = wb_usdt_arr[i].ega_usd;
+
+            // if(wb_usdt_arr[i].ega_usd == 'NaN'){ console.log('here is NAN')}
+            
+            const ega_price = wb_usdt_arr[i].ega_usd != 'NaN'?Number(wb_usdt_arr[i].ega_usd):Number(wb_usdt_arr[i-1].ega_usd);
+            
             transaction_obj_arr.push({
               d: wb_usdt_arr[i].date,
               p: ega_price,
