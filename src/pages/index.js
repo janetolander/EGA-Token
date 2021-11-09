@@ -14,6 +14,7 @@ import jwt_decode from "jwt-decode";
 
 import Signin from "../components/auth/signin";
 import Signup from "../components/auth/signup";
+import ForgotPassword from "../components/auth/forgotPassword";
 import TokenBuy from "./tokenBuy/tokenbuying";
 import TokenSell from "./tokenSell/tokensell";
 import TokenSwap from "./tokenSwap/tokenswap";
@@ -62,6 +63,9 @@ function Pages  ()  {
             </Route>
             <Route exact path="/signin">
               <Signin />
+            </Route>
+            <Route exact path="/forgot">
+              <ForgotPassword />
             </Route>
             <Switch>
                 <PrivateRoute exact path="/home">

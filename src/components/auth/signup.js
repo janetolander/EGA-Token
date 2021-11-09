@@ -4,7 +4,10 @@ import "../../assets/css/common.css";
 
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
-import tokenLogo from "../../assets/images/gahCion.png"
+import tokenLogo from "../../assets/images/gahCion.png";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Signup extends Component {
     constructor() {
@@ -14,6 +17,8 @@ class Signup extends Component {
             phonenumber: "",
             password: "",
             password2: "",
+            birthday : new Date(),
+            nickname : '',
             errors: {}
         };
     }
@@ -37,6 +42,12 @@ class Signup extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
+
+    setBirthday = date => {
+        this.setState({birthday : date});
+        console.log('you selected date is ', date);
+    }
+
   handleSubmit = async e => {
     e.preventDefault();
    
@@ -45,6 +56,8 @@ class Signup extends Component {
         phonenumber:this.state.phonenumber,
         password: this.state.password,
         password2: this.state.password2,
+        birthday : this.state.birthday,
+        nickname : this.state.nickname
       };
       this.props.registerUser(newUser, this.props.history);
   }
@@ -83,7 +96,19 @@ class Signup extends Component {
                                                 <input type="password" className="form-control" id="password2" placeholder="Confirm Password" onChange={this.onChange}/>
                                                 <label>Confirm Password</label>
                                             </div>
-                                            
+                                            <div style={{marginTop:25, marginBottom:25, padding:15, borderRadius:5, border:'1px solid grey'}}>
+                                                <h5 style={{color:'grey'}}>To verify when you forget your password...</h5>
+                                                <p style={{color:'grey', fontSize:12}}>(If you don't input this data, you wont reset your password when you forgot it.)</p>
+                                                <div style={{paddingBottom:25, paddingTop:25}}>
+                                                    <label>What is your birthday?</label>
+                                                    <DatePicker className="form-control" selected={this.state.birthday} onSelect={(date) => this.setBirthday(date)}/>
+                                                </div>
+
+                                                <div style={{paddingBottom:25}}>    
+                                                    <label>What is your childhood nickname?</label>
+                                                    <input type="text" className="form-control" id="nickname" placeholder="Childhood Nickname" onChange={this.onChange}/>   
+                                                </div>
+                                            </div>
                                             <div className="align-items-center flex-wrap">
                                                 <div className="text-center">
                                                     <button type="submit" className="btn btn-primary">Sign Up</button>

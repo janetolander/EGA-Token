@@ -6,7 +6,10 @@ import {connect} from "react-redux";
 import { withRouter } from "react-router";
 import Header from "../layout/header";
 import SideBar from "../layout/sidebar";
-import {BACKEND_URL} from '../../global/config'
+import {BACKEND_URL} from '../../global/config';
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
  
 class Profile extends Component {
   // This is the constructor that stores the data.
@@ -18,6 +21,8 @@ class Profile extends Component {
         phonenumber: "",
         selectedFileName:'',
         photos:[],
+        birthday : new Date(),
+        nickname : '',
         errors: {}
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -31,6 +36,8 @@ class Profile extends Component {
         this.setState({
           name: response.data.name,
           phonenumber: response.data.phonenumber,
+          birthday : new Date(response.data.birthday),
+          nickname:response.data.nickname,
           photos : response.data.photoName?[{filename : response.data.photoName}]:[]
         });
       })
@@ -43,23 +50,29 @@ class Profile extends Component {
   }
  
   // These methods will update the state properties.
-    onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
-    };
+  onChange = e => {
+      this.setState({ [e.target.id]: e.target.value });
+  };
 
-    onChangeFile = e => {
-      
-      this.setState({selectedFileName : e.target.files[0].name})
-      const data = new FormData();
-      data.append('file', e.target.files[0]);
+  onChangeFile = e => {
+    
+    this.setState({selectedFileName : e.target.files[0].name})
+    const data = new FormData();
+    data.append('file', e.target.files[0]);
 
-      axios.post(`${BACKEND_URL}/uploadphoto`, data)
-      .then((res) => {
-        // this.setState({ photos: [res.data, ...this.state.photos] });
-        console.log(res.data)
-        this.setState({ photos: [res.data] });
-      });
-    };
+    axios.post(`${BACKEND_URL}/uploadphoto`, data)
+    .then((res) => {
+      // this.setState({ photos: [res.data, ...this.state.photos] });
+      console.log(res.data)
+      this.setState({ photos: [res.data] });
+    });
+  };
+  
+  setBirthday = date => {
+    this.setState({birthday : date});
+    console.log('you selected date is ', date);
+  }
+
  
   // This function will handle the submission.
   onSubmit(e) {
@@ -68,7 +81,10 @@ class Profile extends Component {
     const newEditedperson = {
       name: this.state.name,
       phonenumber: this.state.phonenumber,
-      photoName : this.state.photos[0].filename
+      photoName : this.state.photos[0].filename,
+      birthday : this.state.birthday,
+      nickname : this.state.nickname,
+      isAdmin : false
     };
     console.log(newEditedperson);
  
@@ -113,9 +129,22 @@ class Profile extends Component {
                                               <input type="file" className="form-control" id="avatar" placeholder="Photo" onChange={this.onChangeFile}/>
                                               {this.state.photos.map((photo, index) => (
                                                 <div style={{margin:'auto'}} key={'div-'+index}>
-                                                  <img src={`${BACKEND_URL}/${photo.filename}`} style={{width:'40%', borderRadius:10}} key={index}/>
+                                                  <img src={`${BACKEND_URL}/${photo.filename}`} style={{width:'20%', borderRadius:10}} key={index}/>
                                                 </div>
                                               ))}
+                                          </div>
+                                          <div style={{marginTop:25, marginBottom:25, padding:15, borderRadius:5, border:'1px solid grey'}}>
+                                              <h5 style={{color:'grey'}}>To verify when you forget your password...</h5>
+                                              <p style={{color:'grey', fontSize:12}}>(If you don't input this data, you wont reset your password when you forgot it.)</p>
+                                              <div style={{paddingBottom:25, paddingTop:25}}>
+                                                  <label>What is your birthday?</label>
+                                                  <DatePicker className="form-control" selected={this.state.birthday} onSelect={(date) => this.setBirthday(date)}/>
+                                              </div>
+
+                                              <div style={{paddingBottom:25}}>    
+                                                  <label>What is your childhood nickname?</label>
+                                                  <input type="text" className="form-control" id="nickname" placeholder="Childhood Nickname" onChange={this.onChange} value={this.state.nickname}/>   
+                                              </div>
                                           </div>
                                       </div>
                                       <div className="modal-footer">

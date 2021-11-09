@@ -85,7 +85,7 @@ class Signin extends Component {
                                             </div>
                                             <div className="d-flex justify-content-between  align-items-center flex-wrap">
                                                 <div className="form-group">
-                                                    <a href="#page-forgot-password.html">Forgot Password?</a>
+                                                    <a href="/forgot">Forgot Password?</a>
                                                 </div>
                                             </div>
                                             <div className="align-items-center flex-wrap">
