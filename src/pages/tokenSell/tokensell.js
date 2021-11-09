@@ -234,6 +234,7 @@ class TokenSell extends Component {
         .then(res =>{
             alert("Your subscribe successfull ! Your subscribe will be approve in 24 hours.")
             this.handleClose();
+            window.location.href = '/wallet'
         }
             
         ).catch(err =>{

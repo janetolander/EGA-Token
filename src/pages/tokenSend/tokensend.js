@@ -93,7 +93,8 @@ export default function TokenSend() {
         .post(`${BACKEND_URL}/record/tranadd`, transactionData)
         .then(res =>{
             alert('Your transferring is successful !')
-            getBalanceData()
+            getBalanceData();
+            window.location.href = '/wallet'
         }
             
         ).catch(err =>{

@@ -112,6 +112,7 @@ export default function TokenSwap() {
         .post(`${BACKEND_URL}/record/swapping`, swappingData)
         .then(res =>{
             alert('Your swapping is successful !');
+            window.loction.href = '/wallet'
         }
             
         ).catch(err =>{

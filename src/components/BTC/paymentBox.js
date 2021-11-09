@@ -103,7 +103,7 @@ export default function PaymentBox(props) {
         .post(`${BACKEND_URL}/record/tranadd`, transactionData)
         .then((res) => {
             alert('Your payout successfull !');
-            window.location.href = '/tokenbuy';
+            window.location.href = '/wallet';
         })
         .catch((err) => {
             console.log(err);
