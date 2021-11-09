@@ -66,13 +66,10 @@ class MenuBar extends Component {
                             <li className="nav-item " style={{padding:0}}>
                                 <NavLink className="dropdown-item" to="/tokenbuy">Token Buying</NavLink>
                             </li>
-                            {
-                                (user.adminType == 'super' || (userauth.data && userauth.data.tokenSale)) && (
-                                    <li className="nav-item " style={{padding:0}}>
-                                        <NavLink className="dropdown-item" to="/tokensell">Token Sale</NavLink>
-                                    </li>
-                                )
-                            }
+                            
+                            <li className="nav-item " style={{padding:0}}>
+                                <NavLink className="dropdown-item" to="/tokensell">Token Sale</NavLink>
+                            </li>
                             
                             <li className="nav-item " style={{padding:0}}>
                                 <NavLink className="dropdown-item" to="/tokenswap">Token Swap</NavLink>
