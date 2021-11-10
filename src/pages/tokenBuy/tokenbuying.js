@@ -57,7 +57,7 @@ export default function TokenBuy() {
   console.log('current users info is ', user)
   const classes = useStyles();
 
-  const [value, setValue] = React.useState('paypal');
+  const [value, setValue] = React.useState('btc');
   const [priceUSD, setPriceUSD] = useState(0);
   const [priceBTC, setPriceBTC] = useState(0);
 
@@ -314,7 +314,7 @@ useEffect(()=>{
                             <FormLabel component="legend">Select Payment!</FormLabel>
                             <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
                                 {/* <FormControlLabel value="stripe" control={<Radio />} label="Credit Cart" /> */}
-                                <FormControlLabel value="paypal" control={<Radio />} label="Paypal" />
+                                {/* <FormControlLabel value="paypal" control={<Radio />} label="Paypal" /> */}
                                 <FormControlLabel value="btc" control={<Radio />} label="BitCoin" />
                             </RadioGroup>
                         </FormControl>

@@ -39,7 +39,7 @@ class TokenSell extends Component {
       mos_usd:0,
       mos_btc:0,
       opening:false,
-      radioValue:'paypal',
+      radioValue:'btc',
       address : '',
       mosBalance:0,
       disbaledBTN:'',
@@ -232,7 +232,7 @@ class TokenSell extends Component {
     axios
         .post(`${BACKEND_URL}/record/salesubscribe`, subscribeData)
         .then(res =>{
-            alert("Your subscribe successfull ! Your subscribe will be approve in 24 hours.")
+            alert("YOUR SALE REQUEST HAS BEEN SUBMITTED AND YOU WILL HAVE YOUR ANSWER WITHIN 24H.")
             this.handleClose();
             window.location.href = '/wallet'
         }
@@ -389,7 +389,7 @@ class TokenSell extends Component {
                                     <FormLabel component="legend" style={{color:'green'}}>Select Payment!</FormLabel>
                                     <RadioGroup aria-label="gender" name="gender1" value={this.state.radioValue} onChange={this.handleRadio}>
                                         {/* <FormControlLabel value="stripe" control={<Radio />} label="Credit Cart" /> */}
-                                        <FormControlLabel value="paypal" control={<Radio />} label="Paypal" />
+                                        {/* <FormControlLabel value="paypal" control={<Radio />} label="Paypal" /> */}
                                         <FormControlLabel value="btc" control={<Radio />} label="BitCoin" />
                                     </RadioGroup>
                                 </FormControl>
