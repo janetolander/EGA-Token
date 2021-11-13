@@ -9,7 +9,6 @@ import Fade from '@material-ui/core/Fade';
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import tokenLogo from "../../assets/images/gahCion.png"
-import { themesList } from 'web3modal';
 
 class Signin extends Component {
     constructor() {
@@ -31,7 +30,6 @@ class Signin extends Component {
         } else {
             this.handleOpen();
         }
-
     };
 
     componentWillReceiveProps(nextProps) {
@@ -58,7 +56,12 @@ class Signin extends Component {
 
     handleSubmit = async e => {
         e.preventDefault();
-        this.handleClose() ; 
+    
+        const credential = {
+            phonenumber: this.state.phonenumber,
+            password: this.state.password
+        };
+        this.props.loginUser(credential);
     }
   render() {
     return(
@@ -151,7 +154,7 @@ class Signin extends Component {
                                 <p>If you join then you can subscribe.</p>
                             </div>
                             <div className="modal-footer">
-                              
+                             
                             </div>
                           </div>
                         </form>
