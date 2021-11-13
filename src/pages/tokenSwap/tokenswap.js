@@ -112,13 +112,15 @@ export default function TokenSwap() {
     axios
         .post(`${BACKEND_URL}/record/swapping`, swappingData)
         .then(res =>{
+            console.log(res.data);
             alert('Your swapping is successful !');
-            window.loction.href = '/wallet'
+            window.location.href = '/wallet'
         }
             
         ).catch(err =>{
             
-            alert('Token has some problems. So, you failed to save your token. token Swipe')
+            alert('Token has some problems. So, you failed to save your token.')
+            console.log(err);
         }
         
     );

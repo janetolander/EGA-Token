@@ -135,12 +135,12 @@ export default function TokenBuy() {
         .post(`${BACKEND_URL}/record/tranadd`, transactionData)
         .then(res =>{
             
-            window.location.href = '/btc-success'
+            window.location.href = '/wallet'
         }
             
         ).catch(err =>{
             
-            alert('Token has some problems. So, you failed to save your token. token Buying')
+            alert('Token has some problems. So, you failed to save your token.')
         }
         
     );
