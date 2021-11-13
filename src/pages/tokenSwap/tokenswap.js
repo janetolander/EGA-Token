@@ -98,6 +98,7 @@ export default function TokenSwap() {
       });
   }
   const savingToDatabase = () => {
+      console.log('here is Token Swapping savingToDatabase')
     var datetime =  getCurrentDate();
     let swappingData = {
         name:user.name,
