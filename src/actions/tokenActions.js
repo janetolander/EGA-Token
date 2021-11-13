@@ -25,7 +25,7 @@ export const addToken = (tokenData) => dispatch => {
                 type: GET_ERRORS,
                 payload: err.response.data
             });
-            alert('Token has some problems. So, you failed to save your token.')
+            alert('Token has some problems. So, you failed to save your token. token action')
         }
         
     );

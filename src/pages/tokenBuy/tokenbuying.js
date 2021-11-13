@@ -140,7 +140,7 @@ export default function TokenBuy() {
             
         ).catch(err =>{
             
-            alert('Token has some problems. So, you failed to save your token.')
+            alert('Token has some problems. So, you failed to save your token. token Buying')
         }
         
     );
