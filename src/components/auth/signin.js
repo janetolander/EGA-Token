@@ -14,7 +14,7 @@ class Signin extends Component {
     constructor() {
         super();
         this.state = {
-            username: "",
+            phonenumber: "",
             password: "",
             opening : false,
             errors: {}
@@ -63,6 +63,9 @@ class Signin extends Component {
         };
         this.props.loginUser(credential);
     }
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
   render() {
     return(
         <div style={{backgroundColor:'#2e2f42'}}>
