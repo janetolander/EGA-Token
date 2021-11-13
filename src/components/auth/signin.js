@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import "../../assets/css/common.css";
+
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import tokenLogo from "../../assets/images/gahCion.png"
+import { themesList } from 'web3modal';
 
 class Signin extends Component {
     constructor() {
@@ -11,15 +17,21 @@ class Signin extends Component {
         this.state = {
             username: "",
             password: "",
+            opening : false,
             errors: {}
         };
+
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
     }
 
     componentDidMount() {
         if (this.props.auth.isAuthenticated) {
-            // this.props.history.push("/list");
             window.location.href = '/home'
+        } else {
+            this.handleOpen();
         }
+
     };
 
     componentWillReceiveProps(nextProps) {
@@ -36,18 +48,18 @@ class Signin extends Component {
         }
     }
 
+    handleOpen () {
+        this.setState({opening:true});
+      };
+
+    handleClose () {
+        this.setState({opening:false});
+      };
+
     handleSubmit = async e => {
         e.preventDefault();
-    
-        const credential = {
-            phonenumber: this.state.phonenumber,
-            password: this.state.password
-        };
-        this.props.loginUser(credential);
+        this.handleClose() ; 
     }
-    onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
-    };
   render() {
     return(
         <div style={{backgroundColor:'#2e2f42'}}>
@@ -106,6 +118,46 @@ class Signin extends Component {
                 </div>
                 </section>
             </div>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={this.state.opening}
+                onClose={this.handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+                style={{display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',}}
+            >
+                <Fade in={this.state.opening}>
+                  <div style={{width:'50%', backgroundColor:'#262626', color:'white', borderRadius:5, minHeight:450}}>
+                    <form style={{width:'100%', margin:'auto'}} onSubmit={this.handleModalSubmit}>
+                        <div className='modal-content' style={{width:'100%', textAlign:'center', margin:'auto', padding:40, minHeight:450, borderRadius:5, maxHeight:600, overflowY:'scroll'}}>
+                            <div>
+                              <h2>Hello visitors.</h2>
+                            </div>
+                            <div className='modal-body'>
+                                <p>We are not experts or professionals in internet economics, cryptocurrency or any investment in electronic money.</p>
+                                <p>We are just a club of investors who have set up through this site a blockchain system to tokenize activities and share the gains with the members of the club.</p>
+                                <p>All those who register on this site are automatically part of the clubs.</p>
+                                <br/>
+                                <br/>
+                                <p>We do not promise you any miracle winnings whatsoever.</p>
+                                <p>By clicking to enter you agree to be of legal age, to have all your mental faculties and to be responsible for all possible gains and losses linked to your transactions here.</p>
+                                <p>We thus owed all responsibilities related to your current and future investments.</p>
+                                <p>If you join then you can subscribe.</p>
+                            </div>
+                            <div className="modal-footer">
+                              
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </Fade>
+            </Modal>
         </div>
     )
   }
