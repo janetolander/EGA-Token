@@ -14,9 +14,11 @@ class Signin extends Component {
     constructor() {
         super();
         this.state = {
-            phonenumber: "",
+            phonenumber: "+",
             password: "",
             opening : false,
+            showWarningMessage : 'none',
+            disbaledBTN:'',
             errors: {}
         };
 
@@ -59,12 +61,22 @@ class Signin extends Component {
     
         const credential = {
             phonenumber: this.state.phonenumber,
-            password: this.state.password
+            password: this.state.password,
         };
         this.props.loginUser(credential);
     }
     onChange = e => {
-        this.setState({ [e.target.id]: e.target.value });
+        if(e.target.id == 'phonenumber'){
+            let phone_num = e.target.value;
+            if(phone_num.substring(0,1) != '+') {
+                this.setState({showWarningMessage : ''});
+                this.setState({disbaledBTN:'disabled',})
+            } else {
+                this.setState({showWarningMessage : 'none'});
+                this.setState({disbaledBTN:'',})
+                this.setState({ phonenumber : phone_num });
+            }
+        } else this.setState({ [e.target.id]: e.target.value });
     };
   render() {
     return(
@@ -86,8 +98,11 @@ class Signin extends Component {
                                         <form onSubmit={this.handleSubmit}>
                                             
                                             <div className="form-floating mb-3">
-                                                <input type="text" className="form-control" id="phonenumber" placeholder="Phone Number" onChange={this.onChange}/>
+                                                <input type="text" className="form-control" id="phonenumber" placeholder="Phone Number" onChange={this.onChange} value={this.state.phonenumber}/>
                                                 <label>Phone Number</label>
+                                            </div>
+                                            <div>
+                                                <p style={{color:'#ff0000', display:this.state.showWarningMessage}} >* Phone Number need to be started with "+" signal.</p>
                                             </div>
                                             <div className="form-floating mb-2">
                                                 <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.onChange}/>
@@ -108,7 +123,7 @@ class Signin extends Component {
                                             </div>
                                             <div className="align-items-center flex-wrap">
                                                 <div className="text-center">
-                                                    <button type="submit" className="btn btn-primary">Sign In</button>
+                                                    <button type="submit" className="btn btn-primary" disabled={this.state.disbaledBTN}>Sign In</button>
                                                 </div>
                                             </div>
                                         </form>
