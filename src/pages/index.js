@@ -45,8 +45,10 @@ if (localStorage.jwtToken) {
 }
 
 setInterval(() => {
+  if(localStorage.jwtToken){
     store.dispatch(getTotalInfo());
     store.dispatch(getCurrentPrice());    
+  }
 }, 6000);
 
 function Pages  ()  {
