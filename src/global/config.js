@@ -11,4 +11,5 @@ export const GENERATIVE_ADDRESS = "0x20ed7bf7bfcd0ca9d9b31c6ac75b7a0c9f903272";
 export const PRIVATE_KEY = "15cd0189ae666696cbed027927287b26a2809044031623d0c66cdc0b99823e1c"
 
 // export const BACKEND_URL = 'http://localhost:3600';
-export const BACKEND_URL = 'https://egaadminserver.herokuapp.com';
+// export const BACKEND_URL = 'https://egaadminserver.herokuapp.com';
+export const BACKEND_URL = 'https://quiet-tor-36743.herokuapp.com';
