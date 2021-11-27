@@ -99,3 +99,12 @@
     background : white;
   }
 }
+
+@media only screen and (max-width: 990px) {
+  .sidebar {
+    width:0;
+  }
+  .mincollapsed {
+    width:100%;
+  }
+}

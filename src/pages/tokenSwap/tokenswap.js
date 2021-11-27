@@ -193,76 +193,79 @@ useEffect(()=>{
     <div>
         <Header />
         <SideBar />
-        <div className='row' style={{minHeight:680, minWidth:'100%', paddingLeft:'17%', paddingTop:245}}>
-            
-            <form style={{width:'60%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
-                <div className='card'>
-                    <div className='card-header-tb'>
-                        Token Swaping 
-                    </div>
-                    <div className='card-body'>
-                        <div className="row">
-                            <div className='col-lg-5'>
-                                <p style={{color:'green'}}>* 1 GAH = {(ega_mos).toFixed(6)} EFRANC </p>
-                                <p style={{color:'green'}}>* 1 FRANC = {(1/(ega_mos)).toFixed(6)} GAH </p>
+        <div className="container-fluid content-inner pb-0" style={{minHeight:680, minWidth:'100%',margin:'auto', paddingLeft:window.innerWidth>990?'25%':'2%', paddingTop:245}}>
+            <div className="row">
+                <div className="col-md-10">
+                    <form style={{width:'100%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
+                        <div className='card'>
+                            <div className='card-header-tb'>
+                                Token Swaping 
                             </div>
-                        
-                            <div className='col-lg-7'>
-                                <p style={{color:'green'}}>* GAH balance : {gahBalance} GAH</p>
-                                <p style={{color:'green'}}>* E-FRANC balance : {mosBalance} EFRANC</p>
-                            </div>
-                        </div>
-                        <div className='textfield'>
-                            <p>From Token : </p>
-                            <FormControl sx={{ m: 1, minWidth: 250 }}>
-                                <Select
-                                    value={selectedFrom}
-                                    onChange={handleChangeSelectFrom}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
+                            <div className='card-body'>
+                                <div className="row">
+                                    <div className='col-lg-5'>
+                                        <p style={{color:'green'}}>* 1 GAH = {(ega_mos).toFixed(6)} EFRANC </p>
+                                        <p style={{color:'green'}}>* 1 FRANC = {(1/(ega_mos)).toFixed(6)} GAH </p>
+                                    </div>
+                                
+                                    <div className='col-lg-7'>
+                                        <p style={{color:'green'}}>* GAH balance : {gahBalance} GAH</p>
+                                        <p style={{color:'green'}}>* E-FRANC balance : {mosBalance} EFRANC</p>
+                                    </div>
+                                </div>
+                                <div className='textfield'>
+                                    <p>From Token : </p>
+                                    <FormControl sx={{ m: 1, minWidth: 250 }}>
+                                        <Select
+                                            value={selectedFrom}
+                                            onChange={handleChangeSelectFrom}
+                                            displayEmpty
+                                            inputProps={{ 'aria-label': 'Without label' }}
+                                            
+                                        >
+                                            <MenuItem value=''>
+                                                <em>None</em>
+                                            </MenuItem>
+                                            <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
+                                            <MenuItem value={'efranc'}>E-FRANC</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <TextField id="standard-basic" type="number" variant="outlined" value={fromAmount} onChange={onChangeFromAmount} min={50}/>
+                                    <p> {selectedFrom.toUpperCase()}</p>
                                     
-                                >
-                                    <MenuItem value=''>
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
-                                    <MenuItem value={'efranc'}>E-FRANC</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField id="standard-basic" type="number" variant="outlined" value={fromAmount} onChange={onChangeFromAmount} min={50}/>
-                            <p> {selectedFrom.toUpperCase()}</p>
-                            
-                        </div>
-                        <div>
-                            <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount because it's more than the balance in your wallet. </p>
-                        </div>
-                        <br/>
-                        <div className='textfield'>
-                            <p>To token : </p>
-                            <FormControl sx={{ m: 1, minWidth: 250 }}>
-                                <Select
-                                    value={selectedTo}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    disabled
-                                >
-                                <MenuItem value=''>
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
-                                <MenuItem value={'efranc'}>E-FRANC</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField id="standard-basic" type="number" variant="outlined" value={toAmount} min={50} disabled/>
-                            <p> {selectedTo.toUpperCase()}</p>
-                        </div>
+                                </div>
+                                <div>
+                                    <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount because it's more than the balance in your wallet. </p>
+                                </div>
+                                <br/>
+                                <div className='textfield'>
+                                    <p>To token : </p>
+                                    <FormControl sx={{ m: 1, minWidth: 250 }}>
+                                        <Select
+                                            value={selectedTo}
+                                            displayEmpty
+                                            inputProps={{ 'aria-label': 'Without label' }}
+                                            disabled
+                                        >
+                                        <MenuItem value=''>
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
+                                        <MenuItem value={'efranc'}>E-FRANC</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <TextField id="standard-basic" type="number" variant="outlined" value={toAmount} min={50} disabled/>
+                                    <p> {selectedTo.toUpperCase()}</p>
+                                </div>
 
-                    </div>
-                    <div className='card-footer'>
-                        <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Swap</button>
-                    </div>
+                            </div>
+                            <div className='card-footer'>
+                                <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Swap</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
   );

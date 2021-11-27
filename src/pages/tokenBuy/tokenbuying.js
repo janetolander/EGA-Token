@@ -250,82 +250,88 @@ useEffect(()=>{
     <div>
         <Header />
         <SideBar />
-        <div className='row' style={{minHeight:680, minWidth:'100%', paddingLeft:'17%', paddingTop:245}}>
-            
-            <form style={{width:'75%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
-                <div className='card'>
-                    <div className='card-header-tb'>
-                        Token Buying 
-                    </div>
-                    <div className='card-body'>
-                        <div className="row">
-                            <div className='col-lg-5'>
-                                {/* <p style={{color:'green'}}>* 1 GAH = {(ega_usd).toFixed(6)} USD </p> */}
-                                <p style={{color:'green'}}>* 1 EFRANC = {(ega_usd/ega_mos).toFixed(6)} USD </p>
-                            </div>
-                        
-                            <div className='col-lg-7'>
-                                <p style={{color:'green'}}>* E-FRANC minimum : {buyLimit} EFRANC</p>
-                                <p style={{color:'green'}}>* USD minimum : {limitUSD} USD</p>
-                            </div>
-                        </div>
-                        <div className='textfield'>
-                            <p>Token Amount : </p>
-                            <FormControl sx={{ m: 1, minWidth: 250 }}>
-                                <Select
-                                    value={token}
-                                    onChange={handleChangeSelect}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    disabled
-                                >
-                                <MenuItem value=''>
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
-                                <MenuItem value={'mos'}>E-FRANC</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField id="standard-basic" type="number" variant="outlined" value={cryptoAmount} onChange={onChangeCryptoAmount} min={50}/>
-                            <p> EFRANC</p>
-                            
-                        </div>
-                        <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount, because it's less than minimum amounts</p>
-                        <br/>
-                        <div className="row">
-                            <div className="col-lg-6 col-md-12">
-                                <div className='textfield'>
-                                    <p>Price : </p>
-                                        <TextField id="filled-basic" type="number" variant="outlined" value={priceUSD} onChange={onChangeUSDAmount}/>
-                                    <p> USD</p>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 col-md-12">
-                                <div className='textfield'>
-                                    <p>Price : </p>
-                                        <TextField id="filled-basic" type="number" variant="outlined" value={priceBTC} onChange={onChangeBTCAmount}/>
-                                    <p> BTC</p>
-                                </div>
-                            </div>
-                        </div>
-                        
+        <div className='container-fluid content-inner pb-0' style={{minHeight:680, minWidth:'100%', paddingLeft:window.innerWidth>990?'25%':'2%', paddingTop:245}}>
+            <div className="row">
+                <div className="col-md-10">
                     
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Select Payment!</FormLabel>
-                            <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                                {/* <FormControlLabel value="stripe" control={<Radio />} label="Credit Cart" /> */}
-                                {/* <FormControlLabel value="paypal" control={<Radio />} label="Paypal" /> */}
-                                <FormControlLabel value="btc" control={<Radio />} label="BitCoin" />
-                            </RadioGroup>
-                        </FormControl>
-                    </div>
-                    <div className='card-footer'>
-                        
-                        <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Buy Now</button>
-                    </div>
-                </div>
-            </form>
+                    <form style={{width:'100%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
+                        <div className='card'>
+                            <div className='card-header-tb'>
+                                Token Buying 
+                            </div>
+                            <div className='card-body'>
+                                <div className="row">
+                                    <div className='col-lg-5'>
+                                        {/* <p style={{color:'green'}}>* 1 GAH = {(ega_usd).toFixed(6)} USD </p> */}
+                                        <p style={{color:'green'}}>* 1 EFRANC = {(ega_usd/ega_mos).toFixed(6)} USD </p>
+                                    </div>
+                                
+                                    <div className='col-lg-7'>
+                                        <p style={{color:'green'}}>* E-FRANC(min) : {buyLimit} EFRANC</p>
+                                        <p style={{color:'green'}}>* USD(min) : {limitUSD} USD</p>
+                                    </div>
+                                </div>
+                                <div className='textfield'>
+                                    <p>Token Amount : </p>
+                                    {window.innerWidth>990?(
+                                        <FormControl sx={{ m: 1, minWidth: 250 }}>
+                                            <Select
+                                                value={token}
+                                                onChange={handleChangeSelect}
+                                                displayEmpty
+                                                inputProps={{ 'aria-label': 'Without label' }}
+                                                disabled
+                                            >
+                                            <MenuItem value=''>
+                                                <em>None</em>
+                                            </MenuItem>
+                                            <MenuItem value={'gah'}>GAH TOKEN</MenuItem>
+                                            <MenuItem value={'mos'}>E-FRANC</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    ):null}
+                                    <TextField id="standard-basic" type="number" variant="outlined" value={cryptoAmount} onChange={onChangeCryptoAmount} min={50}/>
+                                    <p> EFRANC</p>
+                                    
+                                </div>
+                                <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount, because it's less than minimum amounts</p>
+                                <br/>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className='textfield'>
+                                            <p>Price : </p>
+                                                <TextField id="filled-basic" type="number" variant="outlined" value={priceUSD} onChange={onChangeUSDAmount}/>
+                                            <p> USD</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <div className='textfield'>
+                                            <p>Price : </p>
+                                                <TextField id="filled-basic" type="number" variant="outlined" value={priceBTC} onChange={onChangeBTCAmount}/>
+                                            <p> BTC</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend">Select Payment!</FormLabel>
+                                    <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                                        {/* <FormControlLabel value="stripe" control={<Radio />} label="Credit Cart" /> */}
+                                        {/* <FormControlLabel value="paypal" control={<Radio />} label="Paypal" /> */}
+                                        <FormControlLabel value="btc" control={<Radio />} label="BitCoin" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </div>
+                            <div className='card-footer'>
+                                
+                                <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Buy Now</button>
+                            </div>
+                        </div>
+                    </form>
     
+                </div>
+            </div>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"

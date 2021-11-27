@@ -3400,7 +3400,7 @@ textarea.form-control-lg {
             align-items: center;
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
-            justify-content: space-between; }
+            justify-content: end; }
 
 .navbar-brand {
   padding-top: 0.3125rem;
@@ -10939,7 +10939,7 @@ th {
   position: absolute;
   left: 20px;
   right: auto;
-  top: 40px;
+  top: 150px;
   cursor: pointer;
   background: #FF971D;
   color: #fff;

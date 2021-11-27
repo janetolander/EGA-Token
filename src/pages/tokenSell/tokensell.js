@@ -297,8 +297,11 @@ class TokenSell extends Component {
     return (
       <div>
         <Header />
-        <SideBar />
-          <div className="container-fluid content-inner pb-0" style={{minHeight:680, minWidth:'100%',margin:'auto', paddingLeft:'17%', paddingTop:245}}>
+        {window.innerWidth > 990?(
+            <SideBar />
+        ):null}
+        
+          <div className="container-fluid content-inner pb-0" style={{minHeight:680, minWidth:'100%',margin:'auto', paddingLeft:window.innerWidth>990?'25%':'2%', paddingTop:245}}>
                 <div className="row">
                     <div className="col-sm-10">
                         <div className="card">
@@ -414,6 +417,9 @@ class TokenSell extends Component {
                     </div>
                 </Fade>
             </Modal>
+            {window.innerWidth <= 990?(
+            <SideBar />
+        ):null}
       </div>
     );
   }

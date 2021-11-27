@@ -38,7 +38,13 @@ class MenuBar extends Component {
         <div className="position-relative">
             <nav className="nav navbar navbar-expand-lg navbar-light iq-navbar border-bottom" style={{minHeight:65, padding:0}}>
                 <div className="container-fluid navbar-inner" style={{padding:0}}>
-                    
+                    {/* <div className="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                        <i className="icon">
+                        <svg width="20px" height="20px" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                        </svg>
+                        </i>
+                    </div> */}
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style={{float:'right'}}>
                         <span className="navbar-toggler-icon">
                             <span className="navbar-toggler-bar bar1 mt-2"></span>

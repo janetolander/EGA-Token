@@ -136,53 +136,56 @@ useEffect(()=>{
     <div>
         <Header />
         <SideBar />
-        <div className='row' style={{minHeight:680, minWidth:'100%', paddingLeft:'17%', paddingTop:245}}>
-            
-            <form style={{width:'75%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
-                <div className='card'>
-                    <div className='card-header-tb'>
-                        Token Sending 
-                    </div>
-                    <div className='card-body'>
-                        <div className="row">
-                            <div className='col-lg-7'>
-                                <p style={{color:'green'}}>* E-FRANC balance in Your Wallet : {mosBalance} EFRANC</p>
+        <div className="container-fluid content-inner pb-0" style={{minHeight:680, minWidth:'100%',margin:'auto', paddingLeft:window.innerWidth>990?'25%':'2%', paddingTop:245}}>
+            <div className="row">
+                <div className="col-md-10">
+                    <form style={{width:'100%', margin:'auto', marginTop:15}} onSubmit={handleSubmit}>
+                        <div className='card'>
+                            <div className='card-header-tb'>
+                                Token Sending 
+                            </div>
+                            <div className='card-body'>
+                                <div className="row">
+                                    <div className='col-lg-7'>
+                                        <p style={{color:'green'}}>* E-FRANC balance in Your Wallet : {mosBalance} EFRANC</p>
+                                    </div>
+                                </div>
+                                <div style={{width:'100%'}}>
+                                    <div className='row'>
+                                        <div className='col-lg-3' style={{textAlign:'right'}}>
+                                            <p>Amount : </p>
+                                        </div>
+                                        <div className='col-lg-5'>
+                                            <TextField id="amount" className='form-control' type="number" variant="outlined" value={amount} onChange={onChangeAmount} min={50}/>
+                                        </div>
+                                        <div className='col-lg-2'>
+                                            <p>EFRANC</p>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div>
+                                    <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount because it's more than the balance in your wallet. </p>
+                                </div>
+                                <br/>
+                                <div>
+                                    <div className='row'>
+                                        <div className='col-md-3' style={{textAlign:'right'}}>
+                                            <p>To Address : </p>
+                                        </div>
+                                        <div className='col-md-7'>
+                                            <TextField id="toAddress" className='form-control' type="text" variant="outlined" value={address} onChange={onChangeAddress}/>
+                                        </div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                            <div className='card-footer'>
+                                <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Send</button>
                             </div>
                         </div>
-                        <div style={{width:'100%'}}>
-                            <div className='row'>
-                                <div className='col-lg-3' style={{textAlign:'right'}}>
-                                    <p>Amount : </p>
-                                </div>
-                                <div className='col-lg-5'>
-                                    <TextField id="amount" className='form-control' type="number" variant="outlined" value={amount} onChange={onChangeAmount} min={50}/>
-                                </div>
-                                <div className='col-lg-2'>
-                                    <p>EFRANC</p>
-                                </div>
-                            </div>    
-                        </div>
-                        <div>
-                            <p style={{color:'#ff0000', display:displayerr}} >* Invalid amount because it's more than the balance in your wallet. </p>
-                        </div>
-                        <br/>
-                        <div>
-                            <div className='row'>
-                                <div className='col-md-3' style={{textAlign:'right'}}>
-                                    <p>To Address : </p>
-                                </div>
-                                <div className='col-md-7'>
-                                    <TextField id="toAddress" className='form-control' type="text" variant="outlined" value={address} onChange={onChangeAddress}/>
-                                </div>
-                            </div>   
-                        </div>
-
-                    </div>
-                    <div className='card-footer'>
-                        <button type="submit" className="btn btn-primary" disabled={disabledBTN}>Send</button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
   );
