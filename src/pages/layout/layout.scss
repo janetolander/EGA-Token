@@ -107,4 +107,8 @@
   .mincollapsed {
     width:100%;
   }
+  .iq-navbar .dropdown .dropdown-menu[data-bs-popper] {
+    top: 39%;
+    animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
 }

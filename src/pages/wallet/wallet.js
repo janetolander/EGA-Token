@@ -127,49 +127,53 @@ export default function Wallet() {
       <div>
         <Header />
         <SideBar />
-            <div style={{minHeight:680, maxWidth:'90%', paddingLeft:'19%', paddingTop:245, margin:'auto'}}>
-                <div className='card' style={{width:'50%'}}>
-                    <div className='card-header-tb'>
-                        Wallet Balance
-                    </div>
-                    <div className='card-body'>
-                        <div className="row">
-                            <div className='col-lg-12'>
-                                <p style={{color:'green'}}>* GAH balance : {gahBalance} GAH</p>
-                                <p style={{color:'green'}}>* E-FRANC balance : {mosBalance} EFRANC</p>
+            <div className="container-fluid content-inner pb-0" style={{minHeight:680, minWidth:'100%',margin:'auto', paddingLeft:window.innerWidth>990?'25%':'2%', paddingTop:245}}>
+                <div className="row">
+                    <div className="col-sm-10">
+                        <div className='card' style={{width:window.innerWidth>990?'50%':'100%'}}>
+                            <div className='card-header-tb'>
+                                Wallet Balance
+                            </div>
+                            <div className='card-body'>
+                                <div className="row">
+                                    <div className='col-lg-12'>
+                                        <p style={{color:'green'}}>* GAH balance : {gahBalance} GAH</p>
+                                        <p style={{color:'green'}}>* E-FRANC balance : {mosBalance} EFRANC</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div >
-                            <div  style={{paddingRight:70}}>
-                                <h4 >Transaction List ( {tableData.length} Items )</h4>
-                            </div>
-                            <div >
-                                <table className="table table-striped" style={{ marginTop: 20 }}>
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Content</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            tableData.map((currentrecord, index) => {
-                                                console.log('here is Table');
-                                                return(
-                                                    <Record
-                                                        record={currentrecord}
-                                                        key={index}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div >
+                                    <div  style={{paddingRight:70}}>
+                                        <h4 >Transaction List ( {tableData.length} Items )</h4>
+                                    </div>
+                                    <div >
+                                        <table className="table table-striped" style={{ marginTop: 20 }}>
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Type</th>
+                                                    <th>Content</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    tableData.map((currentrecord, index) => {
+                                                        console.log('here is Table');
+                                                        return(
+                                                            <Record
+                                                                record={currentrecord}
+                                                                key={index}
+                                                            />
+                                                        );
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
