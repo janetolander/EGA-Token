@@ -37,6 +37,7 @@ function Home() {
     const [transactions, setTransactions] = useState([]);
     const [currentPrice, setCurrentPrice] = useState(0);
     const [fetchingUSDData, setFetchingUSDData] = useState(true);
+    const [chartWidth, setChartWidth] = useState(0);
 
     const handleChartHover = (hoverLoc, activePoint) =>{
         setActivePoint(activePoint);
@@ -57,9 +58,9 @@ function Home() {
             // if(wb_usdt_arr[i].ega_usd == 'NaN'){ console.log('here is NAN')}
             
             const ega_price = wb_usdt_arr[i].ega_usd != 'NaN'?Number(wb_usdt_arr[i].ega_usd):Number(wb_usdt_arr[i-1].ega_usd);
-            
+            let date = window.innerWidth<990?(wb_usdt_arr[i].date).substring(5, (wb_usdt_arr[i].date).length):wb_usdt_arr[i].date
             transaction_obj_arr.push({
-              d: wb_usdt_arr[i].date,
+              d: date,
               p: ega_price,
               x: j,
               y: ega_price,
@@ -81,6 +82,9 @@ function Home() {
     }
 
     useEffect(() => {
+
+      let width = window.innerWidth > 990?parseInt((window.innerWidth - 260)*0.75):parseInt(window.innerWidth*0.95);
+      setChartWidth(width)
       
       const interval = setInterval(() => {
         setNecessaryState();
@@ -94,18 +98,18 @@ function Home() {
         <div>
           <Header />
           <SideBar />
-          <div style={{paddingLeft:'17%', paddingTop:245}}>
+          <div style={{paddingLeft:window.innerWidth > 990?'17%':0, paddingTop:245}}>
             <p style={{fontSize:28,fontWeight:700,color:'#1eff1e', paddingLeft:"35%"}}>{tokenprice.data?tokenprice.data.egaPrice + ' USD':''} </p>
-            <div style={{maxWidth:'70%', margin:'auto'}}>
-              <div className='row'>
+            <div style={{maxWidth:'70%', margin:window.innerWidth > 990?'auto':10}}>
+              <div>
                 <div className='popup'>
                   {hoverLoc ? <ToolTip hoverLoc={hoverLoc} activePoint={activePoint}/> : null}
                 </div>
               </div>
               <div className="trading-chart">
-                  <div className='chart chart-div' style={{minHeight:'650px'}}>
+                  <div className='chart chart-div'>
                     { !fetchingUSDData ?
-                      <LineChart data={transactions} onChartHover={ (a,b) => handleChartHover(a,b) }/>
+                      <LineChart data={transactions} onChartHover={ (a,b) => handleChartHover(a,b) } svgHeight={parseInt(chartWidth/1.7)} svgWidth={chartWidth}/>
                       : null }
                   </div>
               

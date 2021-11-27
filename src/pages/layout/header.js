@@ -17,12 +17,12 @@ class Header extends Component {
     const { user } = this.props.auth;
   return (
     <div className="container" style={{ minWidth:'100%',backgroundColor:'#262626', zIndex:910, position:'fixed', paddingLeft:0, paddingRight:0}}>
-        <header style={{ minWidth:'100%', minHeight:120, position:'relative'}}>
+        <header style={{ minWidth:'100%', minHeight:120, position:'relative', alignItems:"center"}}>
           
-          <a target="_blank" rel="noopener noreferrer" href="#">
-            <img alt='Coin Panel Logo' lazy="true" src={headerLogo} style={{width:'18%'}}/>
-            GAH-TOKEN Current Price
+          <a target="_blank" rel="noopener noreferrer" href="#" style={{fontSize : '2.2em'}}>
+            <img alt='Coin Panel Logo' lazy="true" src={headerLogo} style={{width:200}}/>
           </a>
+          <h2>GAH-TOKEN Current Price</h2>
         </header>
         <MenuBar />
     </div>
