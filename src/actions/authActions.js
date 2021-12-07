@@ -12,7 +12,9 @@ export const registerUser = (userData, history) => dispatch => {
     axios
         .post(`${SERVER_MAIN_URL}/record/register`, userData)
         // .then(res => history.push("/signin"))
-        .then(res => window.location.href = '/signin')
+        .then(res => {
+            window.location.href = '/signin'
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

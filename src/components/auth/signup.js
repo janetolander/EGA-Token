@@ -37,6 +37,7 @@ class Signup extends Component {
             this.setState({
                 errors: nextProps.errors
             });
+            alert(nextProps.errors.phonenumber);
         }
     }
 
